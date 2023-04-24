@@ -1,0 +1,9 @@
+:host {
+  .logo {
+    display: flex;
+    align-items: center;
+    &__title {
+      margin-left: 10px;
+    }
+  }
+}

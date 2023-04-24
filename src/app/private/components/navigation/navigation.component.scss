@@ -1,0 +1,12 @@
+:host {
+  .navigation {
+    &__item {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+      &.active {
+        opacity: 0.3;
+      }
+    }
+  }
+}

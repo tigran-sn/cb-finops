@@ -1,0 +1,42 @@
+<nav class="navigation">
+  <a
+    class="navigation__item"
+    mat-button
+    [routerLink]="['/reports']"
+    [routerLinkActive]="['active']"
+    [routerLinkActiveOptions]="{ exact: true }"
+    #payouts="routerLinkActive"
+    [disabled]="payouts.isActive"
+    >Reports</a
+  >
+  <a
+    class="navigation__item"
+    mat-button
+    [routerLink]="['/filled-reports']"
+    [routerLinkActive]="['active']"
+    [routerLinkActiveOptions]="{ exact: true }"
+    #filled="routerLinkActive"
+    [disabled]="filled.isActive"
+    >Filled Reports</a
+  >
+  <a
+    class="navigation__item"
+    mat-button
+    [routerLink]="['/sent-reports']"
+    [routerLinkActive]="['active']"
+    [routerLinkActiveOptions]="{ exact: true }"
+    #sent="routerLinkActive"
+    [disabled]="sent.isActive"
+    >Sent Reports</a
+  >
+  <a
+    class="navigation__item"
+    mat-button
+    [routerLink]="['/summary']"
+    [routerLinkActive]="['active']"
+    [routerLinkActiveOptions]="{ exact: true }"
+    #summary="routerLinkActive"
+    [disabled]="summary.isActive"
+    >Summary Information</a
+  >
+</nav>
