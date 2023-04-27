@@ -1,0 +1,11 @@
+:host {
+  .filters {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    &__fields {
+      > * {
+        margin-right: 10px;
+      }
+    }
+  }
+}

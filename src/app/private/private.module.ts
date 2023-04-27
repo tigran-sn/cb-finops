@@ -10,6 +10,7 @@ import { SentReportsComponent } from './components/sent-reports/sent-reports.com
 import { HeaderComponent } from './components/header/header.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SummaryComponent } from './components/summary/summary.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SummaryComponent } from './components/summary/summary.component';
     HeaderComponent,
     NavigationComponent,
     SummaryComponent,
+    FilterComponent,
   ],
   imports: [CommonModule, SharedModule, PrivateRoutingModule],
 })
