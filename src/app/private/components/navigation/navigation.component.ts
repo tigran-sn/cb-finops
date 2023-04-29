@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
+  constructor() {}
 
+  logout(): void {
+    console.log('Logging out...')
+  }
 }
