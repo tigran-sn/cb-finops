@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {RequiredValidator} from "../../../shared/validators";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { RequiredValidator } from "../../../shared/validators";
 
 @Component({
   selector: 'app-edit-dialog',
@@ -21,8 +21,6 @@ export class EditDialogComponent implements OnInit {
   }
 
   private initForm() {
-    // console.log(this.data);
-    // debugger;
     this.form = this.fb.group({
       reportName: [this.data.item.reportName, Validators.compose([
         RequiredValidator.validate,
@@ -38,7 +36,11 @@ export class EditDialogComponent implements OnInit {
     };
   }
 
-  save() {
-    this.dialogRef.close(this.data.item);
+  save(): void {
+    debugger;
+    if (this.form.valid) {
+      const editedData = { ...this.data.item, ...this.form.value };
+      this.dialogRef.close(editedData);
+    }
   }
 }

@@ -31,16 +31,19 @@ export class FilledReportsComponent {
   }
 
   openEditDialog(item: any) {
+    debugger;
     const dialogRef = this.matDialog.open(EditDialogComponent, {
+      width: '600px',
       data: { item },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // if (result) {
-      //   // update the item in the table
-      //   const index = this.items.indexOf(item);
-      //   this.items[index] = result;
-      // }
+      if (result) {
+        // update the item in the table
+        debugger;
+        const index = this.dataSource.data.indexOf(item);
+        this.dataSource.data[index] = result;
+      }
     });
   }
 

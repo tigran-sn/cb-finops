@@ -1,13 +1,11 @@
-<div style="width: 600px;">
+<div>
   <h2 mat-dialog-title>Edit Item</h2>
   <form [formGroup]="form" (ngSubmit)="save()">
-    <div mat-dialog-content>
-      <mat-form-field>
-        <mat-label>Report Name</mat-label>
-        <input matInput placeholder="Report Name" formControlName="reportName" />
-        <!--        <mat-error *ngIf="true">Field can not be empty</mat-error>-->
-      </mat-form-field>
-    </div>
+    <mat-form-field>
+      <mat-label>Report Name</mat-label>
+      <input matInput placeholder="Report Name" formControlName="reportName" />
+      <!--        <mat-error *ngIf="true">Field can not be empty</mat-error>-->
+    </mat-form-field>
     <div mat-dialog-actions>
       <button mat-raised-button color="primary" type="submit">Save</button>
       <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
