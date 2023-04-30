@@ -37,7 +37,6 @@ export class EditDialogComponent implements OnInit {
   }
 
   save(): void {
-    debugger;
     if (this.form.valid) {
       const editedData = { ...this.data.item, ...this.form.value };
       this.dialogRef.close(editedData);

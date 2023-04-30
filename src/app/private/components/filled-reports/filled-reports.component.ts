@@ -31,7 +31,6 @@ export class FilledReportsComponent {
   }
 
   openEditDialog(item: any) {
-    debugger;
     const dialogRef = this.matDialog.open(EditDialogComponent, {
       width: '600px',
       data: { item },
@@ -40,7 +39,6 @@ export class FilledReportsComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // update the item in the table
-        debugger;
         const index = this.dataSource.data.indexOf(item);
         this.dataSource.data[index] = result;
       }
