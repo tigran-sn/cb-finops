@@ -6,7 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { LoginFormModel } from 'src/app/core/infrastructure/models';
+
+import { RequiredValidator } from "../../../shared/validators";
+import { LoginFormModel } from "../../../core/infrastructure/models";
 
 @Component({
   selector: 'app-login',
@@ -14,12 +16,15 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  // form: FormControl;
-  // controls: LoginFormModel;
+  form: FormGroup;
+  controls: LoginFormModel;
+  submitted: boolean;
+  isCapsLockOn: boolean;
+  showPassword = true;
 
   constructor(
     private fb: FormBuilder,
-    private activatedRout: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -27,20 +32,46 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
-  submit(): void {}
+  onSubmit(): void {
+    this.submitted = true;
+    console.log(this.form);
+    if(this.form.valid) {
+      // Show loader
+      // Login
+    }
+  }
 
-  private initForm(): void {
-    // this.form = this.fb.group({
-    //   email: ['', Validators.compose([])],
-    //   password: ['', Validators.compose([])],
-    // });
+  toggleShowPassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  checkCapsLock(event: KeyboardEvent): void {
+    if (event.getModifierState('CapsLock')) {
+      this.isCapsLockOn = true;
+    } else {
+      this.isCapsLockOn = false;
+    }
+  }
+
+  private initForm() {
+    this.form = this.fb.group({
+      username: ['', Validators.compose([
+        RequiredValidator.validate,
+        Validators.maxLength(250),
+      ])],
+      password: ['', Validators.compose([
+        RequiredValidator.validate,
+        Validators.maxLength(20),
+        Validators.minLength(8),
+      ])],
+    });
     this.setControls();
   }
 
   private setControls(): void {
-    // this.controls = {
-    //   email: this.form.get('email'),
-    //   password: this.form.get('password'),
-    // };
+    this.controls = {
+      username: this.form.get('username') as FormControl,
+      password: this.form.get('password') as FormControl,
+    };
   }
 }
