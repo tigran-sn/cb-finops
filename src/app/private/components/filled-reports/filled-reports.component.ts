@@ -4,6 +4,9 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 import { IReport } from '../../interfaces';
 import { REPORTS } from '../../mocks';
@@ -20,11 +23,25 @@ export class FilledReportsComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(private _liveAnnouncer: LiveAnnouncer, private matDialog: MatDialog) {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  openEditDialog(item: any) {
+    const dialogRef = this.matDialog.open(EditDialogComponent, {
+      data: { item },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // if (result) {
+      //   // update the item in the table
+      //   const index = this.items.indexOf(item);
+      //   this.items[index] = result;
+      // }
+    });
   }
 
   /** Announce the change in sort state for assistive technology. */
@@ -42,6 +59,7 @@ export class FilledReportsComponent {
 
   edit(el: IReport): void {
     console.log('edit', el);
+    this.openEditDialog(el);
   }
 
   downloadXLS(el: IReport): void {
@@ -52,84 +70,3 @@ export class FilledReportsComponent {
     console.log('downloadPDF', el);
   }
 }
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-//   {
-//     reportName: '1 Report Name',
-//     dateTime: '1 Date/Time',
-//   },
-// ];

@@ -11,6 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { FilterComponent } from './components/filter/filter.component';
     NavigationComponent,
     SummaryComponent,
     FilterComponent,
+    EditDialogComponent,
   ],
   imports: [CommonModule, SharedModule, PrivateRoutingModule],
 })

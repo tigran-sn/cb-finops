@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () =>
-      import('./public/public.module').then((m) => m.PublicModule),
-  },
+  // {
+  //   path: '',
+  //   loadChildren: () =>
+  //     import('./public/public.module').then((m) => m.PublicModule),
+  // },
   {
     path: '',
     loadChildren: () =>
