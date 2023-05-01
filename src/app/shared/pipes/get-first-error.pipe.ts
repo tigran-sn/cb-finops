@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'getFirstError',
 })
 export class GetFirstErrorPipe implements PipeTransform {
-  transform(value: any, ...args: any[]): string | void {
+  transform(value: any, ...args: any[]): any {
     if (args.length > 1) {
       const controlName = args[0];
       for (const validationMessageKey in args[1][controlName]) {
