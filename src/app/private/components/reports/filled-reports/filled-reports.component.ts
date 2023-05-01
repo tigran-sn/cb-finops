@@ -6,10 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
 
-import { IReport } from '../../interfaces';
-import { REPORTS } from '../../mocks';
+import { IReport } from '../../../interfaces';
+import { REPORTS } from '../../../mocks';
 
 @Component({
   selector: 'app-filled-reports',
@@ -23,7 +23,10 @@ export class FilledReportsComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private matDialog: MatDialog) {}
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private matDialog: MatDialog
+  ) {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

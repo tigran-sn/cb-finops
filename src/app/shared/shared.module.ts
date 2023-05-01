@@ -8,8 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { GetFirstErrorPipe } from './pipes';
+import { FilterComponent } from './components/filter/filter.component';
 
-const COMPONENTS = [NotFoundComponent, LogoComponent];
+const COMPONENTS = [NotFoundComponent, LogoComponent, FilterComponent];
 
 const PIPES = [GetFirstErrorPipe];
 

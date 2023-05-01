@@ -7,8 +7,8 @@ import {
   FormGroup,
 } from '@angular/forms';
 
-import { TransactionType } from '../../enums';
-import { ITransactionType } from '../../interfaces';
+import { TransactionType } from '../../../private/enums';
+import { ITransactionType } from '../../../private/interfaces';
 
 @Component({
   selector: 'app-filter',

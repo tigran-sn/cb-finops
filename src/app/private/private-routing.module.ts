@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivateComponent } from './private.component';
-import { RepotsComponent } from './components/reports/reports.component';
-import { FilledReportsComponent } from './components/filled-reports/filled-reports.component';
 import { SentReportsComponent } from './components/sent-reports/sent-reports.component';
 import { SummaryComponent } from './components/summary/summary.component';
 
@@ -23,10 +21,6 @@ const routes: Routes = [
           import('./components/reports/reports.module').then(
             (m) => m.ReportsModule
           ),
-      },
-      {
-        path: 'filled-reports',
-        component: FilledReportsComponent,
       },
       {
         path: 'sent-reports',
