@@ -1,44 +1,61 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{ "Login" | translate }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input matInput placeholder="Username" formControlName="username" />
-        <!--        <mat-error *ngIf="true">Field can not be empty</mat-error>-->
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          placeholder="Password"
-          [type]="showPassword ? 'password' : 'text'"
-          formControlName="password"
-          (keypress)="checkCapsLock($event)"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="toggleShowPassword()"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="showPassword"
-          type="button"
-        >
-          <mat-icon>{{
-            showPassword ? "visibility_off" : "visibility"
-          }}</mat-icon>
-        </button>
-        <!--        <mat-error *ngIf="true">Field can not be empty</mat-error>-->
-        <!--        <div *ngIf="isCapsLockOn">-->
-        <!--          <div>CapsLock is on.</div>-->
-        <!--        </div>-->
-        <mat-error *ngIf="isCapsLockOn">CapsLock is on.</mat-error>
-      </mat-form-field>
-      <div>
-        <button mat-raised-button color="primary" type="submit">Login</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+<div class="loginPage">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ "Login" | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <mat-label>{{ "Email" | translate }}</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error
+            *ngIf="
+              controls.email.invalid && (controls.email.touched || submitted)
+            "
+            >{{
+              controls.email.errors
+                | getFirstError : "email" : validationMessages
+                | translate
+            }}</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ "Password" | translate }}</mat-label>
+          <input
+            matInput
+            [type]="showPassword ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="toggleShowPassword()"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="showPassword"
+            type="button"
+          >
+            <mat-icon>{{
+              showPassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="
+              controls.password.invalid &&
+              (controls.password.touched || submitted)
+            "
+            >{{
+              controls.password.errors
+                | getFirstError : "password" : validationMessages
+                | translate
+            }}</mat-error
+          >
+        </mat-form-field>
+        <div>
+          <button mat-raised-button color="primary" type="submit">
+            {{ "Login" | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

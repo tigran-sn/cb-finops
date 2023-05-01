@@ -11,8 +11,10 @@ import { GetFirstErrorPipe } from './pipes';
 
 const COMPONENTS = [NotFoundComponent, LogoComponent];
 
+const PIPES = [GetFirstErrorPipe];
+
 @NgModule({
-  declarations: [NotFoundComponent, LogoComponent, GetFirstErrorPipe],
+  declarations: [...COMPONENTS, ...PIPES],
   imports: [
     CommonModule,
     RouterModule,
@@ -22,6 +24,7 @@ const COMPONENTS = [NotFoundComponent, LogoComponent];
   ],
   exports: [
     ...COMPONENTS,
+    ...PIPES,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

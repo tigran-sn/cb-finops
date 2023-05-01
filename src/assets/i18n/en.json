@@ -1,5 +1,8 @@
 {
   "Email": "Email",
-  "IncorrectEmailError": "Incorrect email format.",
-  "Login": "Login"
+  "IncorrectEmailError": "Incorrect email format",
+  "Login": "Login",
+  "RequiredField": "Required field",
+  "Password": "Password",
+  "CapsLock": "CapsLock is on"
 }

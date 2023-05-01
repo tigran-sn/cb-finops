@@ -1,9 +1,16 @@
-mat-card {
-  max-width: 400px;
-  margin: auto;
-}
+:host {
+  mat-card {
+    width: 400px;
+    margin: auto;
+  }
 
-form {
-  display: flex;
-  flex-direction: column;
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  div:has(> button[type="submit"]) {
+    text-align: right;
+    margin-top: 30px;
+  }
 }

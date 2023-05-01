@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { RequiredValidator } from '../../../shared/validators';
+import { RequiredValidator, EmailValidator } from '../../../shared/validators';
 import { LoginFormModel } from '../../../core/infrastructure/models';
 import {
   Messages,
@@ -56,38 +56,23 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  checkCapsLock(event: KeyboardEvent): void {
-    if (event.getModifierState('CapsLock')) {
-      this.isCapsLockOn = true;
-    } else {
-      this.isCapsLockOn = false;
-    }
-  }
-
   private initForm() {
     this.form = this.fb.group({
-      username: [
+      email: [
         '',
         Validators.compose([
           RequiredValidator.validate,
-          Validators.maxLength(250),
+          EmailValidator.validate,
         ]),
       ],
-      password: [
-        '',
-        Validators.compose([
-          RequiredValidator.validate,
-          Validators.maxLength(20),
-          Validators.minLength(8),
-        ]),
-      ],
+      password: ['', Validators.compose([RequiredValidator.validate])],
     });
     this.setControls();
   }
 
   private setControls(): void {
     this.controls = {
-      username: this.form.get('username') as FormControl,
+      email: this.form.get('email') as FormControl,
       password: this.form.get('password') as FormControl,
     };
   }
@@ -95,14 +80,10 @@ export class LoginComponent implements OnInit {
   private getValidationMessages(): void {
     this.validationMessages.email = [
       { type: 'required', message: Messages.required },
-      { type: 'maxlength', message: 'LongEmailError' },
       { type: 'validateEmail', message: 'IncorrectEmailError' },
     ];
     this.validationMessages.password = [
       { type: 'required', message: Messages.required },
-      { type: 'maxlength', message: 'LongPasswordError' },
-      { type: 'minlength', message: 'ShortPasswordError' },
-      // { type: 'validateCopyPastPattern', message: `${Messages.westernKeyboard}` }
     ];
   }
 }

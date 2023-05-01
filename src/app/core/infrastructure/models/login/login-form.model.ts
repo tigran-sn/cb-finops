@@ -1,6 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 
 export class LoginFormModel {
-  username: AbstractControl;
+  email: AbstractControl;
   password: AbstractControl;
 }

@@ -1,5 +1,8 @@
 {
-  "Email": "Email",
-  "IncorrectEmailError": "Incorrect email format.",
-  "Login": "Մուտք"
+  "Email": "Էլ. փոստ",
+  "IncorrectEmailError": "Էլ. փոստի սխալ ձևաչափ",
+  "Login": "Մուտք",
+  "RequiredField": "Դաշտը դատարկ լինել չի կարող",
+  "Password": "Գաղտնաբառ",
+  "CapsLock": "CapsLock-ը միացված է"
 }
