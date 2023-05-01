@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8">
+<div class="table__page">
   <h2 class="table__title">Financial summary data</h2>
   <table
     mat-table
@@ -6,13 +6,13 @@
     matSort
     (matSortChange)="announceSortChange($event)"
   >
-    <!-- Position Column -->
+    <!-- Position -->
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>No.</th>
       <td mat-cell *matCellDef="let element">{{ element.position }}</td>
     </ng-container>
 
-    <!-- Currency ISO code Column -->
+    <!-- Currency ISO code -->
     <ng-container matColumnDef="iso">
       <th
         mat-header-cell
@@ -25,7 +25,7 @@
       <td mat-cell *matCellDef="let element">{{ element.iso }}</td>
     </ng-container>
 
-    <!-- Total volume Column -->
+    <!-- Total volume -->
     <ng-container matColumnDef="totalVolume">
       <th
         mat-header-cell
@@ -38,7 +38,7 @@
       <td mat-cell *matCellDef="let element">{{ element.totalVolume }}</td>
     </ng-container>
 
-    <!-- Weighted average exchange rate Column -->
+    <!-- Weighted average exchange rate -->
     <ng-container matColumnDef="weightedAverageExchangeRate">
       <th
         mat-header-cell
@@ -53,7 +53,7 @@
       </td>
     </ng-container>
 
-    <!-- Transaction Form Column -->
+    <!-- Transaction Form -->
     <ng-container matColumnDef="transactionForm">
       <th
         mat-header-cell
@@ -68,7 +68,7 @@
       </td>
     </ng-container>
 
-    <!-- Date/Time Column -->
+    <!-- Date/Time -->
     <ng-container matColumnDef="dateTime">
       <th
         mat-header-cell
