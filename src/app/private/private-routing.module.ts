@@ -19,7 +19,10 @@ const routes: Routes = [
       },
       {
         path: 'reports',
-        component: RepotsComponent,
+        loadChildren: () =>
+          import('./components/reports/reports.module').then(
+            (m) => m.ReportsModule
+          ),
       },
       {
         path: 'filled-reports',
