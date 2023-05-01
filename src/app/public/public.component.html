@@ -1,3 +1,18 @@
+<mat-toolbar color="primary">
+  <app-header>
+    <nav class="navigation">
+      <a
+        class="navigation__item"
+        mat-button
+        [routerLink]="['/login']"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Log in</a
+      >
+    </nav>
+  </app-header>
+</mat-toolbar>
+
 <div class="mainContent">
   <router-outlet></router-outlet>
 </div>
