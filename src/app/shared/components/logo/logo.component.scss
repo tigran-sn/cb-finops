@@ -1,8 +1,10 @@
 :host {
   .logo {
+    text-decoration: none;
     display: flex;
     align-items: center;
     &__title {
+      color: #fff;
       margin-left: 10px;
     }
   }

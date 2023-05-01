@@ -2,47 +2,11 @@
   <a
     class="navigation__item"
     mat-button
-    [routerLink]="['/reports']"
+    *ngFor="let path of paths"
+    [routerLink]="path.path"
     [routerLinkActive]="['active']"
     [routerLinkActiveOptions]="{ exact: true }"
-    #payouts="routerLinkActive"
-    [disabled]="payouts.isActive"
-    >Reports</a
-  >
-  <a
-    class="navigation__item"
-    mat-button
-    [routerLink]="['/filled-reports']"
-    [routerLinkActive]="['active']"
-    [routerLinkActiveOptions]="{ exact: true }"
-    #filled="routerLinkActive"
-    [disabled]="filled.isActive"
-    >Filled Reports</a
-  >
-  <a
-    class="navigation__item"
-    mat-button
-    [routerLink]="['/sent-reports']"
-    [routerLinkActive]="['active']"
-    [routerLinkActiveOptions]="{ exact: true }"
-    #sent="routerLinkActive"
-    [disabled]="sent.isActive"
-    >Sent Reports</a
-  >
-  <a
-    class="navigation__item"
-    mat-button
-    [routerLink]="['/summary']"
-    [routerLinkActive]="['active']"
-    [routerLinkActiveOptions]="{ exact: true }"
-    #summary="routerLinkActive"
-    [disabled]="summary.isActive"
-    >Summary Information</a
-  >
-  <a
-    class="navigation__item"
-    (click)="logout()"
-    mat-button
-  >Log out</a
-  >
+    >{{ path.name }}
+  </a>
+  <a class="navigation__item" (click)="logout()" mat-button>Log out</a>
 </nav>
