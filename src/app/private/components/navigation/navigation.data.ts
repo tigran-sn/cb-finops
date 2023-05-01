@@ -14,7 +14,7 @@ export const PATHS: IMenu[] = [
   {
     key: 'sentReports',
     name: 'Sent Reports',
-    path: 'sent-reports',
+    path: 'reports/sent-reports',
   },
   {
     key: 'summaryInformation',

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RepotsComponent } from './reports.component';
 import { FilledReportsComponent } from './filled-reports/filled-reports.component';
+import { SentReportsComponent } from './sent-reports/sent-reports.component';
 import { DetailsComponent } from './details/details.component';
 
 const routes: Routes = [
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'filled-reports',
         component: FilledReportsComponent,
+      },
+      {
+        path: 'sent-reports',
+        component: SentReportsComponent,
       },
       {
         path: 'create',
