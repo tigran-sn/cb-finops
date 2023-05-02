@@ -1,5 +1,12 @@
 <div>
   <div class="wrapper">
     <router-outlet></router-outlet>
+    <ng-container *ngIf="showLoader$ | async">
+      <div class="overlay">
+        <div class="center">
+          <mat-progress-spinner mode="indeterminate"> </mat-progress-spinner>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

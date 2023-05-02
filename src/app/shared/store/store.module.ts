@@ -1,10 +1,17 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import {
+  ModuleWithProviders,
+  NgModule,
+  Inject,
+  InjectionToken,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from './store.service';
 
 export function storeFactory<T>(initialState: T): Store<T> {
   return Store.getInstance(initialState);
 }
+
+export const INITIAL_STATE = new InjectionToken<any>('initialState');
 
 @NgModule({
   declarations: [],

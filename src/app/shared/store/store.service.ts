@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, scan } from 'rxjs/operators';
+import { INITIAL_STATE } from './store.module';
 
 @Injectable()
 export class Store<T extends any> {
-  private static instance: Store<any> = null;
+  private static instance: Store<any> | null = null;
   /* tslint:disable:variable-name */
   private _store: BehaviorSubject<T>;
   private _history: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
@@ -12,10 +13,10 @@ export class Store<T extends any> {
 
   /* tslint:enable:variable-name */
 
-  constructor(private initialState: T) {
+  constructor(@Inject(INITIAL_STATE) private initialState: T) {
     this._store = new BehaviorSubject(initialState);
     this._store
-      .pipe(scan((acc, cur) => [...acc, cur], []))
+      .pipe(scan((acc: T[], cur: T) => [...acc, cur], [] as T[]))
       .subscribe(this._history);
   }
 
