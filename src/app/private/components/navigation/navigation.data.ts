@@ -2,19 +2,26 @@ import { IMenu } from '../../../core/infrastructure/interfaces';
 
 export const PATHS: IMenu[] = [
   {
-    key: 'reports',
+    key: '',
     name: 'Reports',
-    path: 'reports',
-  },
-  {
-    key: 'filledReports',
-    name: 'Filled Reports',
-    path: 'reports/filled-reports',
-  },
-  {
-    key: 'sentReports',
-    name: 'Sent Reports',
-    path: 'reports/sent-reports',
+    path: '',
+    menuItems: [
+      {
+        key: 'reports',
+        name: 'All',
+        path: 'reports',
+      },
+      {
+        key: 'filledReports',
+        name: 'Filled Reports',
+        path: 'reports/filled-reports',
+      },
+      {
+        key: 'sentReports',
+        name: 'Sent Reports',
+        path: 'reports/sent-reports',
+      },
+    ],
   },
   {
     key: 'summaryInformation',

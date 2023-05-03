@@ -1,12 +1,30 @@
 <nav class="navigation">
-  <a
-    class="navigation__item"
-    mat-button
-    *ngFor="let path of paths"
-    [routerLink]="path.path"
-    [routerLinkActive]="['active']"
-    [routerLinkActiveOptions]="{ exact: true }"
-    >{{ path.name }}
-  </a>
+  <ng-container *ngFor="let path of paths">
+    <ng-container *ngIf="path.menuItems?.length; else isMenuItem">
+      <button mat-button [matMenuTriggerFor]="menu">{{ path.name }}</button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <ng-container *ngFor="let menuItem of path.menuItems">
+          <a
+            class="navigation__item"
+            mat-menu-item
+            [routerLink]="menuItem.path"
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ menuItem.name }}
+          </a>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+    <ng-template #isMenuItem>
+      <a
+        class="navigation__item"
+        mat-button
+        [routerLink]="path.path"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >{{ path.name }}
+      </a>
+    </ng-template>
+  </ng-container>
   <a class="navigation__item" (click)="logout()" mat-button>Log out</a>
 </nav>

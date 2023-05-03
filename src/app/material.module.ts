@@ -16,6 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 
@@ -37,6 +38,7 @@ const matModules = [
   MatNativeDateModule,
   MatDialogModule,
   MatProgressSpinnerModule,
+  MatMenuModule,
 ];
 
 @NgModule({
