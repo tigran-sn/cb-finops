@@ -52,7 +52,15 @@
   </mat-paginator>
 </div> -->
 
-<app-filter></app-filter>
+<div class="is-flex is-justify-content-space-between is-align-items-center">
+  <app-filter></app-filter>
+  <div class="content-align-right">
+    <button mat-flat-button color="primary" (click)="create()">
+      <mat-icon>add</mat-icon>
+      New report
+    </button>
+  </div>
+</div>
 
 <div class="table__page">
   <mat-table

@@ -73,4 +73,6 @@ export class FilledReportsComponent {
   downloadPDF(el: IReport): void {
     console.log('downloadPDF', el);
   }
+
+  create(): void {}
 }
