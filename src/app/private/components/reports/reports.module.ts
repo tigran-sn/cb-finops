@@ -8,6 +8,7 @@ import { RepotsComponent } from './reports.component';
 import { FilledReportsComponent } from './filled-reports/filled-reports.component';
 import { SentReportsComponent } from './sent-reports/sent-reports.component';
 import { DetailsComponent } from './details/details.component';
+import { CreateReportButtonComponent } from '../create-report-button/create-report-button.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DetailsComponent } from './details/details.component';
     FilledReportsComponent,
     SentReportsComponent,
     DetailsComponent,
+    CreateReportButtonComponent,
   ],
   imports: [CommonModule, ReportsRoutingModule, SharedModule],
 })
