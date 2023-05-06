@@ -4,14 +4,17 @@ import { STORAGE_CONFIG_TOKEN } from './constants';
 
 @Injectable()
 export class CookieService {
-
-  constructor(@Inject(STORAGE_CONFIG_TOKEN) private config: StorageConfig) { }
+  constructor(@Inject(STORAGE_CONFIG_TOKEN) private config: StorageConfig) {}
 
   private get expirationDate() {
     return this.config.cookies.expirationDate;
   }
 
-  set(name: string, value: string | number | boolean, expiration: Date = this.expirationDate) {
+  set(
+    name: string,
+    value: string | number | boolean,
+    expiration: Date = this.expirationDate as Date
+  ) {
     const expires = `expires=${expiration.toUTCString()}`;
     window.document.cookie = `${name}=${value.toString()};${expires};path=/`;
   }
