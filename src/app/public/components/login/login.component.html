@@ -51,7 +51,12 @@
           >
         </mat-form-field>
         <div>
-          <button mat-raised-button color="primary" type="submit">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            (click)="onSubmit()"
+          >
             {{ "Login" | translate }}
           </button>
         </div>

@@ -15,13 +15,16 @@ import {
 } from '../../../core/infrastructure/interfaces';
 import { LanguageService } from '../../../core/services/languages';
 import { LocalStorageService } from '../../../storage/local-storage.service';
+import { AuthService } from 'src/app/core/services';
+import { State, Store } from 'src/app/shared/store';
+import { LoginBaseComponent } from '../login-base/login-base.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends LoginBaseComponent implements OnInit {
   form: FormGroup;
   controls: LoginFormModel;
   submitted: boolean;
@@ -31,11 +34,16 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    // public localStorage: LocalStorageService,
-    private router: Router,
+    public activatedRoute: ActivatedRoute,
+    public authService: AuthService,
+    public localStorage: LocalStorageService,
+    public router: Router,
+    public store: Store<State>,
+    // public notificationService: NotificationService,
     private languageService: LanguageService
-  ) {}
+  ) {
+    super(authService, localStorage, router, activatedRoute, store); // notificationService
+  }
 
   ngOnInit(): void {
     this.languageService.reset();
@@ -47,8 +55,8 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     console.log(this.form);
     if (this.form.valid) {
-      // Show loader
-      // Login
+      this.store.update({ showLoader: true });
+      this.login(this.form.value);
     }
   }
 
