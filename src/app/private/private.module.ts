@@ -7,6 +7,7 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
+import { PermissionsGuard } from './services/guard';
 
 @NgModule({
   declarations: [
@@ -17,5 +18,6 @@ import { EditDialogComponent } from './components/edit-dialog/edit-dialog.compon
     EditDialogComponent,
   ],
   imports: [CommonModule, SharedModule, PrivateRoutingModule],
+  providers: [PermissionsGuard],
 })
 export class PrivateModule {}

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from '../core/services/auth';
 import { PrivateComponent } from './private.component';
 import { SummaryComponent } from './components/summary/summary.component';
+import { PermissionsGuard } from './services/guard';
 
 const routes: Routes = [
   {
@@ -21,11 +22,12 @@ const routes: Routes = [
           import('./components/reports/reports.module').then(
             (m) => m.ReportsModule
           ),
+        canActivate: [PermissionsGuard],
       },
       {
         path: 'summary',
         component: SummaryComponent,
-        // canActivate: [PermissionsGuard],
+        canActivate: [PermissionsGuard],
       },
     ],
   },

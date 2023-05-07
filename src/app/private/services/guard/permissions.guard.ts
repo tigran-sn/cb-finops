@@ -87,7 +87,7 @@ export class PermissionsGuard implements CanActivate {
   ): Observable<boolean> {
     let id = 0;
     ActionPathsConst.forEach((action) => {
-      if (next.routeConfig.path === action.name) {
+      if (next.routeConfig?.path === action.name) {
         id = action.id;
         return;
       }
