@@ -9,25 +9,25 @@ const routes: Routes = [
   {
     path: '',
     component: PrivateComponent,
-    canActivateChild: [AuthGuardService],
+    // canActivateChild: [AuthGuardService],
     children: [
-      {
-        path: '',
-        redirectTo: 'reports',
-        pathMatch: 'full',
-      },
+      // {
+      //   path: '',
+      //   redirectTo: 'reports',
+      //   pathMatch: 'full',
+      // },
       {
         path: 'reports',
         loadChildren: () =>
           import('./components/reports/reports.module').then(
             (m) => m.ReportsModule
           ),
-        canActivate: [PermissionsGuard],
+        // canActivate: [PermissionsGuard],
       },
       {
         path: 'summary',
         component: SummaryComponent,
-        canActivate: [PermissionsGuard],
+        // canActivate: [PermissionsGuard],
       },
     ],
   },
