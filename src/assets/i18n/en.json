@@ -1,10 +1,24 @@
 {
-  "CENTRAL BANK OF ARMENIA": "CENTRAL BANK OF ARMENIA",
-  "Financial operations": "Financial operations",
+  "CBA": "CENTRAL BANK OF ARMENIA",
+  "FinOps": "Financial operations",
   "Email": "Email",
   "IncorrectEmailError": "Incorrect email format",
   "Login": "Login",
   "RequiredField": "Required field",
   "Password": "Password",
-  "CapsLock": "CapsLock is on"
+  "CapsLock": "CapsLock is on",
+  "TransactionNumber": "Transaction number",
+  "TransactionType": "Transaction Type",
+  "Participant": "Participant",
+  "Partner": "Partner",
+
+  "CashCurrencyPurchase": "Cash currency purchase",
+  "CashCurrencySales": "Cash currency sales",
+  "CashlessCurrencyPurchase": "Cashless currency purchase",
+  "CashlessCurrencySales": "Cashless currency sales",
+
+  "Reports": "Reports",
+  "FilledReports": "Filled Reports",
+  "SentReports": "Sent Reports",
+  "FinancialSummaryData": "Financial Summary Data"
 }

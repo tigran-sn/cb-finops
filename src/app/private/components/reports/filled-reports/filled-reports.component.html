@@ -52,81 +52,85 @@
   </mat-paginator>
 </div> -->
 
-<div class="is-flex is-justify-content-space-between is-align-items-center">
-  <app-filter></app-filter>
-  <app-create-report-button></app-create-report-button>
-</div>
+<div class="page">
+  <h2 class="page__title fz-2 my-2">{{ "FilledReports" | translate }}</h2>
 
-<div class="table__page">
-  <mat-table
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    (matSortChange)="announceSortChange($event)"
-  >
-    <!-- Report name Column -->
-    <ng-container matColumnDef="reportName">
-      <mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by Report name"
-      >
-        Report name
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <div class="tableRow">
-          <div class="tableRow__header">
-            <mat-icon>description</mat-icon> {{ element.reportName }}
+  <div class="is-flex is-justify-content-space-between is-align-items-center">
+    <app-filter></app-filter>
+    <app-create-report-button></app-create-report-button>
+  </div>
+
+  <div class="table__page">
+    <mat-table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+    >
+      <!-- Report name Column -->
+      <ng-container matColumnDef="reportName">
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by Report name"
+        >
+          Report name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="tableRow">
+            <div class="tableRow__header">
+              <mat-icon>description</mat-icon> {{ element.reportName }}
+            </div>
+            <div class="tableRow__icons">
+              <button
+                (click)="edit(element)"
+                mat-icon-button
+                aria-label="Edit report"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                (click)="downloadXLS(element)"
+                mat-icon-button
+                aria-label="Download report as XLS"
+              >
+                <mat-icon>save_alt</mat-icon>
+              </button>
+              <button
+                (click)="downloadPDF(element)"
+                mat-icon-button
+                aria-label="Download report as PDF"
+              >
+                <mat-icon>picture_as_pdf</mat-icon>
+              </button>
+            </div>
           </div>
-          <div class="tableRow__icons">
-            <button
-              (click)="edit(element)"
-              mat-icon-button
-              aria-label="Edit report"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              (click)="downloadXLS(element)"
-              mat-icon-button
-              aria-label="Download report as XLS"
-            >
-              <mat-icon>save_alt</mat-icon>
-            </button>
-            <button
-              (click)="downloadPDF(element)"
-              mat-icon-button
-              aria-label="Download report as PDF"
-            >
-              <mat-icon>picture_as_pdf</mat-icon>
-            </button>
-          </div>
-        </div>
-      </mat-cell>
-    </ng-container>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Date/Time Column -->
-    <ng-container matColumnDef="dateTime">
-      <mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by Date/Time"
-      >
-        Date/Time
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.dateTime }}
-      </mat-cell>
-    </ng-container>
+      <!-- Date/Time Column -->
+      <ng-container matColumnDef="dateTime">
+        <mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by Date/Time"
+        >
+          Date/Time
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.dateTime }}
+        </mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  </mat-table>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
 
-  <mat-paginator
-    [pageSizeOptions]="[10, 20, 50, 100]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
-  >
-  </mat-paginator>
+    <mat-paginator
+      [pageSizeOptions]="[10, 20, 50, 100]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
 </div>

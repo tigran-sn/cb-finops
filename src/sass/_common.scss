@@ -28,6 +28,26 @@
   height: auto;
 }
 
+.mx-1 {
+  margin-right: 15px !important;
+  margin-left: 15px !important;
+}
+
+.mx-2 {
+  margin-right: 30px !important;
+  margin-left: 30px !important;
+}
+
+.my-1 {
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+}
+
+.my-2 {
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+}
+
 .px-1 {
   padding-right: 15px !important;
   padding-left: 15px !important;
@@ -48,6 +68,14 @@
   padding-bottom: 30px !important;
 }
 
+.fz-1 {
+  font-size: 1rem !important;
+}
+
+.fz-2 {
+  font-size: 2rem !important;
+}
+
 .cb-color {
   color: rgb(157, 155, 149) !important;
 }
@@ -56,6 +84,24 @@
   background-color: rgb(41, 63, 80) !important;
 }
 
-.width-250 {
-  width: 250px;
+.dropdown-width {
+  width: 330px;
+}
+
+.page {
+  &__title {
+    color: rgb(41, 63, 80);
+    font-size: 2rem;
+    display: inline-block;
+    position: relative;
+    &::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: rgb(41, 63, 80);
+      position: absolute;
+      bottom: -5px;
+    }
+  }
 }
