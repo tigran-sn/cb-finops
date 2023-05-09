@@ -11,17 +11,17 @@
 }
 
 .is-justify-content-space-between {
-  justify-content: space-between;
+  justify-content: space-between !important;
 }
 
 .is-align-items-center {
-  align-items: center;
+  align-items: center !important;
 }
 
 .is-flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .h-auto {
@@ -89,6 +89,7 @@
 }
 
 .page {
+  margin-bottom: 30px;
   &__title {
     color: rgb(41, 63, 80);
     font-size: 2rem;
@@ -103,5 +104,25 @@
       position: absolute;
       bottom: -5px;
     }
+  }
+}
+
+button[color="primary"] > * {
+  color: rgb(41, 63, 80);
+}
+
+a[color="primary"] > .mat-mdc-button-persistent-ripple {
+  background-color: rgb(41, 63, 80);
+}
+
+.mainContent {
+  min-height: 400px;
+}
+
+.mat-typography {
+  .copyright {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0;
   }
 }

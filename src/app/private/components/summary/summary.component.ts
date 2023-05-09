@@ -1,16 +1,17 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import { LanguageService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss'],
 })
-export class SummaryComponent {
+export class SummaryComponent implements OnInit {
   displayedColumns: string[] = [
     'position',
     'iso',
@@ -19,12 +20,22 @@ export class SummaryComponent {
     'transactionForm',
     'dateTime',
   ];
+  language: string;
   dataSource = new MatTableDataSource<ISummary>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    private languageService: LanguageService
+  ) {}
+
+  ngOnInit(): void {
+    this.languageService.currentLanguage.subscribe(
+      (lang) => (this.language = lang)
+    );
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

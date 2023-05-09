@@ -3,6 +3,10 @@
     text-decoration: none;
     display: flex;
     align-items: center;
+    img {
+      height: 60px;
+      width: 60px;
+    }
     &__title {
       font-size: 20px;
       color: #fff;
@@ -13,6 +17,17 @@
       font-size: 16px;
       color: #fff;
       margin-left: 10px;
+    }
+    &.is-small {
+      img {
+        height: 35px;
+        width: 35px;
+      }
+      .logo__title {
+        font-size: 18px;
+        margin-left: 5px;
+        margin-bottom: 0;
+      }
     }
   }
 }

@@ -12,12 +12,14 @@ import { LogoComponent } from './components/logo/logo.component';
 import { GetFirstErrorPipe } from './pipes';
 import { FilterComponent } from './components/filter/filter.component';
 import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const COMPONENTS = [
   NotFoundComponent,
   LogoComponent,
   FilterComponent,
   HeaderComponent,
+  FooterComponent,
 ];
 
 const PIPES = [GetFirstErrorPipe];

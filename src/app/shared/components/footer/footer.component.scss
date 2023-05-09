@@ -1,0 +1,16 @@
+:host {
+  .footer {
+    &__contacts {
+    }
+    &__contact {
+      margin: 2px 0;
+      > *:first-child {
+        margin-right: 10px;
+      }
+      a {
+        color: rgb(157, 155, 149);
+        text-decoration: none;
+      }
+    }
+  }
+}
