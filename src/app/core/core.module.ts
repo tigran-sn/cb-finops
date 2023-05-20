@@ -20,7 +20,7 @@ import { UtilitiesModule } from '../utilities/utilities.module';
     CommonModule,
     StoreModule.forRoot(initialState),
     StorageModule.forRoot({
-      localStorage: { prefix: 'tms', suppressWarnings: false },
+      localStorage: { prefix: 'cba', suppressWarnings: false },
       cookies: { expirationDate: null },
     }),
     HttpModule.forRoot({
@@ -40,4 +40,8 @@ import { UtilitiesModule } from '../utilities/utilities.module';
     // PasswordSetupService,
   ],
 })
-export class CoreModule {}
+export class CoreModule {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    throwIfAlreadyLoaded(parentModule, 'CoreModule');
+  }
+}
