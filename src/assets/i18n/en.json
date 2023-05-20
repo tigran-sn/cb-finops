@@ -20,5 +20,8 @@
   "Reports": "Reports",
   "FilledReports": "Filled Reports",
   "SentReports": "Sent Reports",
-  "FinancialSummaryData": "Financial Summary Data"
+  "FinancialSummaryData": "Financial Summary Data",
+
+  "Telephone": "Telephone",
+  "PostalAddress": "Postal Address"
 }

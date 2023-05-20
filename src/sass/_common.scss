@@ -6,12 +6,32 @@
   display: flex !important;
 }
 
+.is-flex-direction-row {
+  flex-direction: row !important;
+}
+
 .is-flex-direction-row-reverse {
   flex-direction: row-reverse !important;
 }
 
+.is-flex-direction-column {
+  flex-direction: column;
+}
+
 .is-justify-content-space-between {
   justify-content: space-between !important;
+}
+
+.is-justify-content-space-around {
+  justify-content: space-around !important;
+}
+
+.is-justify-content-space-evenly {
+  justify-content: space-evenly !important;
+}
+
+.is-justify-content-center {
+  justify-content: center;
 }
 
 .is-align-items-center {
@@ -117,6 +137,8 @@ a[color="primary"] > .mat-mdc-button-persistent-ripple {
 
 .mainContent {
   min-height: 400px;
+  padding-top: 90px;
+  padding-bottom: 180px;
 }
 
 .mat-typography {

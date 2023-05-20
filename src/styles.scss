@@ -6,6 +6,7 @@ body {
   background-color: whitesmoke;
 }
 body {
+  min-height: 100vh;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
@@ -13,3 +14,4 @@ body {
 @import "sass/common";
 @import "sass/variables";
 @import "sass/core/main";
+@import "sass/override";

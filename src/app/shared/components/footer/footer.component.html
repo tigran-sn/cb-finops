@@ -1,23 +1,25 @@
 <footer class="footer cb-bg-color cb-color px-2 py-1">
-  <div class="is-flex is-justify-content-space-between">
-    <app-logo [isSmall]="true"></app-logo>
-    <div class="footer__contacts">
-      <div class="footer__contact">
-        <span>{{ "Telephone" | translate }}:</span>
-        <a href="tel:37410592592">(374-10) 592 592</a>
-      </div>
-      <div class="footer__contact is-flex">
-        <span>{{ "PostalAddress" | translate }}:</span>
-        <div>
-          <span>Central Bank of Armenia</span>
-          <br />
-          <span>Vazgen Sargsyan str.6</span>
-        </div>
-      </div>
-      <div class="footer__contact">
-        <span>{{ "Email" | translate }}:</span>
-        <a href="mailto:secretariat@cba.am">secretariat@cba.am</a>
-      </div>
+  <div class="footer__contacts is-flex is-justify-content-space-around">
+    <div
+      class="footer__contact is-flex is-flex-direction-column is-align-items-center"
+    >
+      <h3>{{ "Telephone" | translate }}</h3>
+      <a href="tel:37410592592">(374-10) 592 592</a>
+    </div>
+    <div
+      class="footer__contact is-flex is-flex-direction-column is-align-items-center"
+    >
+      <h3>{{ "PostalAddress" | translate }}</h3>
+
+      <p>Central Bank of Armenia</p>
+
+      <p>Vazgen Sargsyan str.6</p>
+    </div>
+    <div
+      class="footer__contact is-flex is-flex-direction-column is-align-items-center"
+    >
+      <h3>{{ "Email" | translate }}</h3>
+      <a href="mailto:secretariat@cba.am">secretariat@cba.am</a>
     </div>
   </div>
   <p class="copyright">
