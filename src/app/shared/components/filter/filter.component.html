@@ -1,8 +1,8 @@
 <div class="filters">
   <form [formGroup]="form">
     <div class="filters__fields">
-      <mat-form-field appearance="fill">
-        <mat-label>Transaction type</mat-label>
+      <mat-form-field appearance="fill" class="dropdown-width">
+        <mat-label>{{ "TransactionType" | translate }}</mat-label>
         <mat-select
           formControlName="transactionType"
           (selectionChange)="onSelectChange($event)"
