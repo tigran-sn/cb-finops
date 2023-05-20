@@ -20,6 +20,12 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+
 const matModules = [
   MatSlideToggleModule,
   MatCardModule,
@@ -39,6 +45,10 @@ const matModules = [
   MatDialogModule,
   MatProgressSpinnerModule,
   MatMenuModule,
+
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
 ];
 
 @NgModule({
