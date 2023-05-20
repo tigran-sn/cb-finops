@@ -61,19 +61,14 @@
   </div>
 
   <div class="table__page">
-    <mat-table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      (matSortChange)="announceSortChange($event)"
-    >
+    <mat-table mat-table [dataSource]="dataSource">
+      <!-- matSort -->
+      <!-- (matSortChange)="announceSortChange($event)" -->
       <!-- Report name Column -->
       <ng-container matColumnDef="reportName">
-        <mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by Report name"
-        >
+        <mat-header-cell *matHeaderCellDef>
+          <!-- mat-sort-header
+          sortActionDescription="Sort by Report name" -->
           Report name
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
@@ -110,11 +105,9 @@
 
       <!-- Date/Time Column -->
       <ng-container matColumnDef="dateTime">
-        <mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by Date/Time"
-        >
+        <mat-header-cell *matHeaderCellDef>
+          <!-- mat-sort-header
+          sortActionDescription="Sort by Date/Time" -->
           Date/Time
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
