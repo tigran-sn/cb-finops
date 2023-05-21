@@ -9,6 +9,7 @@ import { FilledReportsComponent } from './filled-reports/filled-reports.componen
 import { SentReportsComponent } from './sent-reports/sent-reports.component';
 import { DetailsComponent } from './details/details.component';
 import { CreateReportButtonComponent } from '../create-report-button/create-report-button.component';
+import { ReportsService } from '../../services';
 
 @NgModule({
   declarations: [
@@ -19,5 +20,6 @@ import { CreateReportButtonComponent } from '../create-report-button/create-repo
     CreateReportButtonComponent,
   ],
   imports: [CommonModule, ReportsRoutingModule, SharedModule],
+  providers: [ReportsService],
 })
 export class ReportsModule {}

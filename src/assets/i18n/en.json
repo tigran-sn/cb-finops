@@ -23,5 +23,18 @@
   "FinancialSummaryData": "Financial Summary Data",
 
   "Telephone": "Telephone",
-  "PostalAddress": "Postal Address"
+  "PostalAddress": "Postal Address",
+
+  "BUY": "Cash currency purchase",
+  "SELL": "Cash currency sales",
+  "CLBUY": "Cashless currency purchase",
+  "CLSELL": "Cashless currency sales",
+
+  "ReportName": "Report name",
+  "DateTime": "Date/Time",
+  "Status": "Status",
+
+  "SENT": "Sent",
+  "FILLED": "Filled",
+  "SUMMARIZED": "Summarized"
 }

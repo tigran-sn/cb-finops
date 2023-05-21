@@ -1,10 +1,6 @@
-import {
-  ISOCodeEnum,
-  ReportStatusEnum,
-  DealTypeEnum,
-} from 'src/app/core/infrastructure/enums';
+import { ISOCodeEnum, ReportStatusEnum, DealTypeEnum } from '../../enums';
 
-export interface IReport {
+export class ReportModel {
   dealId: number;
   dealType: DealTypeEnum;
   participant: string;
