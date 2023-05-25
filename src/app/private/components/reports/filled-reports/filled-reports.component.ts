@@ -1,15 +1,26 @@
-import { Component, ViewChild } from '@angular/core';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+// import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { SelectionModel } from '@angular/cdk/collections';
 
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  _MatTableDataSource,
+} from '@angular/material/table';
 // import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 
 import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
 
 import { IReport } from '../../../interfaces';
-import { REPORTS } from '../../../mocks';
+import { ReportsService } from '../../../services';
+import { State, Store } from 'src/app/shared/store';
+import { delay } from 'rxjs';
+import { ReportModel } from 'src/app/core/infrastructure/models';
+import { IResponse } from 'src/app/core/infrastructure/interfaces';
+import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
+import { ReportTypeEnum } from 'src/app/core/infrastructure/enums';
 
 @Component({
   selector: 'app-filled-reports',
@@ -20,16 +31,50 @@ export class FilledReportsComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['reportName', 'dateTime'];
-  dataSource = new MatTableDataSource<IReport>(REPORTS);
+  displayedColumns: string[] = [
+    'select',
+    'dealId',
+    'dealType',
+    'participant',
+    'partner',
+    'isocode',
+    'volume',
+    'rate',
+    'dealDate',
+    'calculationDate',
+    'status',
+  ];
+  // dataSource = new MatTableDataSource<IReport>(REPORTS);
+  dataSource: MatTableDataSource<ReportModel>;
+  selection = new SelectionModel<ReportModel>(true, []);
 
   constructor(
-    private _liveAnnouncer: LiveAnnouncer,
-    private matDialog: MatDialog
+    // private _liveAnnouncer: LiveAnnouncer,new MatTableDataSource<IReport>(REPORTS);
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private matDialog: MatDialog,
+    private reportsService: ReportsService,
+    private store: Store<State>
   ) {}
 
+  ngOnInit(): void {
+    this.store.update({ showLoader: true });
+    this.reportsService
+      .getReports({ reportType: ReportTypeEnum.All })
+      .pipe(delay(1500))
+      .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
+        if (res.success) {
+          this.dataSource = new _MatTableDataSource(res.data.listItems);
+          this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort;
+
+          this.store.update({ showLoader: false });
+        }
+      });
+  }
+
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
   }
 
@@ -74,5 +119,36 @@ export class FilledReportsComponent {
     console.log('downloadPDF', el);
   }
 
-  create(): void {}
+  create() {
+    this.router.navigate(['create'], {
+      relativeTo: this.activatedRoute,
+    });
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection?.selected?.length;
+    const numRows = this.dataSource?.data?.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: ReportModel): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.dealId + 1
+    }`;
+  }
 }

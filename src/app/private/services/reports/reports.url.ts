@@ -1,6 +1,6 @@
 class ReportsUrl {
   get getReports(): string {
-    return '/api/reports';
+    return '/GetReports';
   }
 }
 
