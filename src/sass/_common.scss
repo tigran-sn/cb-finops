@@ -151,8 +151,7 @@ a[color="primary"] > .mat-mdc-button-persistent-ripple {
 }
 
 .mainContent {
-  min-height: calc(100vh - 190px);
-  padding-top: 90px;
+  min-height: calc(100vh - 65px);
 }
 
 .mat-typography {
@@ -163,7 +162,7 @@ a[color="primary"] > .mat-mdc-button-persistent-ripple {
   }
 }
 
+.mat-column-select,
 .mat-column-dealId {
-  min-width: 40px;
   max-width: 60px;
 }
