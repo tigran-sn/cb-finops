@@ -41,15 +41,6 @@ export class LoginBaseComponent implements OnInit, OnDestroy {
           this.localStorage.set('language', decodedToken.locale);
           this.localStorage.set('access_token', res.access_token);
           this.localStorage.set('id', this.form.value.email);
-          // if (loginModel.hasOwnProperty('rememberMe')) {
-          //   if (this.form.get('rememberMe').value.length) {
-          //     sessionStorage.setItem('rememberMeStatus', true.toString());
-          //     sessionStorage.setItem('rememberMeEmail', this.form.value.email);
-          //   } else {
-          //     sessionStorage.removeItem('rememberMeStatus');
-          //     sessionStorage.removeItem('rememberMeEmail');
-          //   }
-          // }
 
           this.authService.TokenSubject.next('Bearer ' + res.access_token);
 
@@ -59,7 +50,7 @@ export class LoginBaseComponent implements OnInit, OnDestroy {
               this.store.update({ showLoader: false });
               const navUrl = queryParam['redirectUrl']
                 ? queryParam['redirectUrl']
-                : '/login';
+                : '/reports';
               this.router.navigateByUrl(decodeURIComponent(navUrl));
             });
         }

@@ -53,7 +53,6 @@ export class LoginComponent extends LoginBaseComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    console.log(this.form);
     if (this.form.valid) {
       this.store.update({ showLoader: true });
       this.login(this.form.value);
