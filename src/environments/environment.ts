@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   webUrl: 'http://localhost:7039',
   apiUrl: 'http://localhost:7039',
-  identityServerUrl: 'https://qa-trkx-auth.azurewebsites.net',
+  identityServerUrl: 'https://auth.tradecloud1.net',
   whitelistedDomains: [
     'localhost:8001',
     'localhost:5000',

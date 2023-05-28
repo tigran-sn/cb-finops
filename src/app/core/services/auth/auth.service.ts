@@ -25,6 +25,8 @@ export class AuthService {
   private readonly grant_type: string = 'password';
   private readonly client_secret: string = 'secret';
   /* tslint:enable:variable-name */
+  // TODO Remove
+  // private readonly scope: string = 'api openid';
   private readonly scope: string = 'api openid';
   // UserInfoSubject = new BehaviorSubject<UserInfoViewModel>(null);
   UserIdSubject = new BehaviorSubject<number | null>(null);
