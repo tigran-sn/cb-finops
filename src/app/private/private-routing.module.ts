@@ -11,11 +11,11 @@ const routes: Routes = [
     component: PrivateComponent,
     // canActivateChild: [AuthGuardService],
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'reports',
-      //   pathMatch: 'full',
-      // },
+      {
+        path: '',
+        redirectTo: 'reports',
+        pathMatch: 'full',
+      },
       {
         path: 'reports',
         loadChildren: () =>
