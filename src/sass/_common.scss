@@ -72,6 +72,22 @@
   margin-bottom: 30px !important;
 }
 
+.mr-1 {
+  margin-right: 15px !important;
+}
+
+.mr-2 {
+  margin-right: 30px !important;
+}
+
+.ml-1 {
+  margin-left: 15px !important;
+}
+
+.ml-2 {
+  margin-left: 30px !important;
+}
+
 .px-1 {
   padding-right: 15px !important;
   padding-left: 15px !important;
@@ -100,6 +116,31 @@
   font-size: 2rem !important;
 }
 
+.reportForm {
+  max-width: 700px;
+  &__buttons {
+    text-align: right;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  &.row-1 {
+  }
+  &.row-2 {
+    > * {
+      width: 48%;
+    }
+  }
+  &.row-3 {
+    > * {
+      width: 32%;
+    }
+  }
+}
+
 .cb-color {
   color: rgb(157, 155, 149) !important;
 }
@@ -109,7 +150,8 @@
 }
 
 .dropdown-width {
-  width: 330px;
+  max-width: 330px;
+  width: 100%;
 }
 
 .tableRow {
@@ -143,9 +185,9 @@
   }
 }
 
-button[color="primary"] > * {
-  color: rgb(41, 63, 80);
-}
+//button[color="primary"] > * {
+//  color: rgb(41, 63, 80);
+//}
 
 a[color="primary"] > .mat-mdc-button-persistent-ripple {
   background-color: rgb(41, 63, 80);
