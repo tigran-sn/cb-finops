@@ -60,7 +60,7 @@ export class FilledReportsComponent {
   ngOnInit(): void {
     this.store.update({ showLoader: true });
     this.reportsService
-      .getReports({ reportType: ReportTypeEnum.All })
+      .getReports(ReportTypeEnum.All)
       .pipe(delay(1500))
       .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
         if (res.success) {
@@ -71,6 +71,10 @@ export class FilledReportsComponent {
           this.store.update({ showLoader: false });
         }
       });
+  }
+
+  private generateIds(reports: SelectionModel<ReportModel>): string {
+    return reports.selected.map(report => report.dealId).join();
   }
 
   ngAfterViewInit() {
@@ -150,5 +154,10 @@ export class FilledReportsComponent {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.dealId + 1
     }`;
+  }
+
+  sendSelectedReports(reports: SelectionModel<ReportModel>): void {
+    let ids = this.generateIds(reports);
+    // TODO Implement service call
   }
 }
