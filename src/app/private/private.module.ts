@@ -7,6 +7,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { SummaryComponent } from './components/summary/summary.component';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 import { PermissionsGuard } from './services/guard';
+import {SummaryService} from "./services/summary";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { PermissionsGuard } from './services/guard';
     EditDialogComponent,
   ],
   imports: [CommonModule, SharedModule, PrivateRoutingModule],
-  providers: [PermissionsGuard],
+  providers: [PermissionsGuard, SummaryService],
 })
 export class PrivateModule {}
