@@ -16,7 +16,7 @@ import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
 import {IFilterData, IReport} from '../../../interfaces';
 import { ReportsService } from '../../../services';
 import { State, Store } from 'src/app/shared/store';
-import { delay } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { ReportModel } from 'src/app/core/infrastructure/models';
 import { IResponse } from 'src/app/core/infrastructure/interfaces';
 import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
@@ -171,8 +171,20 @@ export class FilledReportsComponent {
   sendSelectedReports(reports: SelectionModel<ReportModel>): void {
     this.store.update({ showLoader: true });
     this.reportsService.sendReports(this.getIdList(reports))
+      .pipe(
+        switchMap(() => {
+          return this.reportsService.getReports(ReportTypeEnum.Filled);
+        })
+      )
       .subscribe((res) => {
-        this.store.update({ showLoader: false });
+        if (res.success) {
+          this.dataSource = new _MatTableDataSource(res.data.listItems);
+          this.dataSource.paginator = this.paginator;
+          this.selection = new SelectionModel<ReportModel>(true, []);
+          // this.dataSource.sort = this.sort;
+
+          this.store.update({ showLoader: false });
+        }
       });
   }
 }
