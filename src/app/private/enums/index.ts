@@ -1,1 +1,1 @@
-export * from './transaction-type.enum';
+export * from './deal-type.enum';

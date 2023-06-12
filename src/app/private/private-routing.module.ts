@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuardService } from '../core/services/auth';
+import { AuthGuardService } from '../core/services';
 import { PrivateComponent } from './private.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { PermissionsGuard } from './services/guard';
@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     component: PrivateComponent,
-    // canActivateChild: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
     children: [
       {
         path: '',

@@ -1,14 +1,20 @@
 // TODO Continue Filter implementation
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
 } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
-import { TransactionType } from '../../../private/enums';
-import { ITransactionType } from '../../../private/interfaces';
+import { dealType } from '../../../private/enums';
+import { IDealType } from '../../../private/interfaces';
+import { LanguageService } from 'src/app/core/services';
+import {FilterModel, ReportsLookupModel} from "../../../core/infrastructure/models";
+import {Observable} from "rxjs";
+import {IResponse} from "../../../core/infrastructure/interfaces";
+import {map} from "rxjs/operators";
+import {LookupsService} from "../../../private/services/lookups/lookups.service";
 
 @Component({
   selector: 'app-filter',
@@ -16,23 +22,36 @@ import { ITransactionType } from '../../../private/interfaces';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
+  @Output() filter = new EventEmitter<any>();
   form: FormGroup;
-  controls: { transactionType: AbstractControl; range: AbstractControl };
-  transactionType = new FormControl<TransactionType | null>(null);
+  controls: FilterModel;
+  dealType = new FormControl<dealType | null>(null);
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
+  dealTypes: IDealType[];
+  language: string;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private languageService: LanguageService,
+    private lookupsService: LookupsService,
+    private datePipe: DatePipe,
+  ) {}
 
   ngOnInit(): void {
+    this.languageService.currentLanguage.subscribe(
+      (lang) => (this.language = lang)
+    );
+    // this.languageService.setLanguage('hy');
+    this.getLookUps().subscribe();
     this.initForm();
   }
 
   private initForm() {
-    this.form = this._formBuilder.group({
-      transactionType: this.transactionType,
+    this.form = this.fb.group({
+      dealType: this.dealType,
       range: this.range,
     });
     this.setControls();
@@ -40,9 +59,30 @@ export class FilterComponent implements OnInit {
 
   private setControls() {
     this.controls = {
-      transactionType: this.form.get('transactionType') as FormControl,
+      dealType: this.form.get('dealType') as FormControl,
       range: this.form.get('range') as FormGroup,
     };
+  }
+
+  private getLookUps(): Observable<IResponse<ReportsLookupModel>> {
+    return this.lookupsService.getLookUps().pipe(
+      map((res: IResponse<ReportsLookupModel>) => {
+        if (res.success) {
+          this.dealTypes = res.data.dealTypes;
+        }
+        return res;
+      })
+    )
+  }
+
+  private emitFilter(): void {
+    this.filter.emit({
+      dealType: this.dealTypeValue.value,
+      range: {
+        start: this.datePipe.transform(this.dateRange?.get('start')?.value, 'dd-MM-yyyy'),
+        end: this.datePipe.transform(this.dateRange?.get('end')?.value, 'dd-MM-yyyy'),
+      }
+    });
   }
 
   onSelectChange(event: any) {
@@ -50,36 +90,20 @@ export class FilterComponent implements OnInit {
   }
 
   applyFilter(): void {
-    console.log(this.form);
+    this.emitFilter();
   }
 
   resetFilter(): void {
     this.form.reset();
     this.setControls();
-    console.log(this.form);
+    this.emitFilter();
   }
 
-  get dateRange(): string {
-    return this.form.get('range')?.value;
+  get dateRange(): FormControl {
+    return this.form.get('range') as FormControl;
   }
 
-  get transactionTypeValue(): string {
-    return this.form.get('transactionType')?.value;
+  get dealTypeValue(): FormControl {
+    return this.form.get('dealType') as FormControl;
   }
-
-  transactionTypes: ITransactionType[] = [
-    {
-      value: TransactionType.CASH_PURCHASE,
-      viewValue: 'Cash currency purchase',
-    },
-    {
-      value: TransactionType.CACHLESS_PURCHASE,
-      viewValue: 'Cashless currency purchase',
-    },
-    { value: TransactionType.CASH_SALES, viewValue: 'Cash currency sales' },
-    {
-      value: TransactionType.CASHLESS_SALES,
-      viewValue: 'Cashless currency sales',
-    },
-  ];
 }

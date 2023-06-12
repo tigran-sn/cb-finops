@@ -31,18 +31,18 @@ export class LoginBaseComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   login(loginModel: LoginModel): void {
-    this.authService.login(loginModel).subscribe(
-      (res) => {
+    this.authService.login(loginModel).subscribe({
+      next: (res) => {
         if (!res.error) {
           const jwtHelper: JwtHelperService = new JwtHelperService();
           const decodedToken = jwtHelper.decodeToken(
-            res.access_token as string
+            res.token as string
           );
-          this.localStorage.set('language', decodedToken.locale);
-          this.localStorage.set('access_token', res.access_token);
-          this.localStorage.set('id', this.form.value.email);
+          // this.localStorage.set('language', 'hy');
+          this.localStorage.set('access_token', res.token);
+          this.localStorage.set('id', this.form.value.username);
 
-          this.authService.TokenSubject.next('Bearer ' + res.access_token);
+          this.authService.TokenSubject.next('Bearer ' + res.token);
 
           this.activatedRoute.queryParams
             .pipe(takeUntil(this.destroy$))
@@ -55,11 +55,11 @@ export class LoginBaseComponent implements OnInit, OnDestroy {
             });
         }
       },
-      (err) => {
+      error: (err) => {
         this.authService.logOut({});
         // this.notificationService.showError(err.error.error_description);
       }
-    );
+    });
   }
 
   ngOnDestroy() {

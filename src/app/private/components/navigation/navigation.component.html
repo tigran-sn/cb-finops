@@ -6,7 +6,7 @@
         [matMenuTriggerFor]="menu"
         class="is-flex is-flex-direction-row-reverse"
       >
-        {{ path.name }} <mat-icon>expand_more</mat-icon>
+        {{ path.name | translate }} <mat-icon>expand_more</mat-icon>
       </button>
       <mat-menu #menu="matMenu" xPosition="before">
         <ng-container *ngFor="let menuItem of path.menuItems">
@@ -16,7 +16,7 @@
             [routerLink]="menuItem.path"
             [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="{ exact: true }"
-            >{{ menuItem.name }}
+            >{{ menuItem.name | translate }}
           </a>
         </ng-container>
       </mat-menu>
@@ -28,9 +28,9 @@
         [routerLink]="path.path"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
-        >{{ path.name }}
+        >{{ path.name | translate }}
       </a>
     </ng-template>
   </ng-container>
-  <a class="navigation__item" (click)="logout()" mat-button>Log out</a>
+  <a class="navigation__item" (click)="logout()" mat-button>{{ "LogOut" | translate }}</a>
 </nav>

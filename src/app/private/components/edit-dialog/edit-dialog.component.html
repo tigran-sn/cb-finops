@@ -1,14 +1,179 @@
 <div>
   <h2 mat-dialog-title>Edit Item</h2>
-  <form [formGroup]="form" (ngSubmit)="save()">
-    <mat-form-field>
-      <mat-label>Report Name</mat-label>
-      <input matInput placeholder="Report Name" formControlName="reportName" />
-      <!--        <mat-error *ngIf="true">Field can not be empty</mat-error>-->
-    </mat-form-field>
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" type="submit">Save</button>
-      <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+  <form [formGroup]="form" (ngSubmit)="save()" class="reportForm px-1">
+    <div class="row row-2">
+      <mat-form-field>
+        <mat-label>{{ "TransactionNumber" | translate }}</mat-label>
+        <input
+          matInput
+          placeholder="Transaction number"
+          formControlName="dealId"
+        />
+        <mat-error
+          *ngIf="
+            controls.dealId.invalid &&
+            (controls.dealId.touched || submitted)
+          "
+          >{{
+            controls.dealId.errors
+              | getFirstError : "transactionNumber" : validationMessages
+              | translate
+          }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ "TransactionType" | translate }}</mat-label>
+        <mat-select formControlName="dealType">
+          <mat-option
+            *ngFor="let dealType of dealTypes"
+            [value]="dealType.value"
+          >
+            {{ dealType.value | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            controls.dealType.invalid &&
+            (controls.dealType.touched || submitted)
+          "
+        >{{
+          controls.dealType.errors
+            | getFirstError : "dealType" : validationMessages
+            | translate
+          }}</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="row row-2">
+      <!-- Partner -->
+      <mat-form-field>
+        <mat-label>{{ "Partner" | translate }}</mat-label>
+        <input matInput formControlName="partner" />
+        <mat-error
+          *ngIf="
+            controls.partner.invalid && (controls.partner.touched || submitted)
+          "
+          >{{
+            controls.partner.errors
+              | getFirstError : "partner" : validationMessages
+              | translate
+          }}</mat-error
+        >
+      </mat-form-field>
+
+      <!-- Participant -->
+      <mat-form-field>
+        <mat-label>{{ "Participant" | translate }}</mat-label>
+        <input
+          matInput
+          placeholder="Participant"
+          formControlName="participant"
+        />
+        <mat-error
+          *ngIf="
+            controls.participant.invalid &&
+            (controls.participant.touched || submitted)
+          "
+        >{{
+          controls.participant.errors
+            | getFirstError : "participant" : validationMessages
+            | translate
+          }}</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="row row-2">
+      <!-- Sign date -->
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'DealDate' | translate }}</mat-label>
+        <input
+          matInput
+          [ngxMatDatetimePicker]="picker"
+          formControlName="dealDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="$any(picker)"
+        >
+        </mat-datepicker-toggle>
+        <ngx-mat-datetime-picker
+          #picker
+          [showSpinners]="true"
+        >
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ "CalculationDate" | translate }}</mat-label>
+        <input matInput [matDatepicker]="calculationDate" formControlName="calculationDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="calculationDate"></mat-datepicker-toggle>
+        <mat-datepicker #calculationDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="row row-3">
+      <mat-form-field>
+        <mat-label>{{ "ISOCode" | translate }}</mat-label>
+        <mat-select formControlName="isocode">
+          <mat-option *ngFor="let isocode of isocodes" [value]="isocode.value">{{ isocode.viewValue }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            controls.isocode.invalid && (controls.isocode.touched || submitted)
+          "
+        >{{
+          controls.isocode.errors
+            | getFirstError : "isocode" : validationMessages
+            | translate
+          }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ "Volume" | translate }}</mat-label>
+        <input matInput formControlName="volume" />
+        <mat-error
+          *ngIf="
+            controls.volume.invalid && (controls.volume.touched || submitted)
+          "
+        >{{
+          controls.volume.errors
+            | getFirstError : "volume" : validationMessages
+            | translate
+          }}</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ "Rate" | translate }}</mat-label>
+        <input matInput formControlName="rate" />
+        <mat-error
+          *ngIf="
+            controls.rate.invalid && (controls.rate.touched || submitted)
+          "
+        >{{
+          controls.rate.errors
+            | getFirstError : "rate" : validationMessages
+            | translate
+          }}</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions class="px-0 py-1">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid && form.touched"
+      >{{ "Save" | translate }}</button>
+      <button mat-button type="button" (click)="dialogRef.close()">
+        Cancel
+      </button>
     </div>
   </form>
 </div>

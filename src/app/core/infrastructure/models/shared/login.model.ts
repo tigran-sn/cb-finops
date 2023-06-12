@@ -1,8 +1,8 @@
 export class LoginModel {
-  email: string;
-  password: string | null;
+  username: string;
+  password: string;
   constructor(loginModel: LoginModel) {
-    this.email = loginModel.email || '';
-    this.password = loginModel.password || null;
+    this.username = loginModel.username;
+    this.password = loginModel.password;
   }
 }

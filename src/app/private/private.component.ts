@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
+
+import { Store, State } from '../shared/store';
+import { Languages } from '../core/infrastructure/enums';
+import { AuthService } from '../core/services';
+import { LanguageService } from '../core/services';
 
 @Component({
   selector: 'app-private',
@@ -7,9 +14,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivateComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private auth: AuthService,
+    private store: Store<State>,
+    private activatedRoute: ActivatedRoute,
+    private languageService: LanguageService,
+  ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.data
+      .pipe(first())
+      .subscribe(() => {
+        this.languageService.setLanguage(Languages.Armenian);
+      });
   }
 
 }

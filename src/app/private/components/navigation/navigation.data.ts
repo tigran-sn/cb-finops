@@ -13,19 +13,19 @@ export const PATHS: IMenu[] = [
       },
       {
         key: 'filledReports',
-        name: 'Filled Reports',
+        name: 'FilledReports',
         path: 'reports/filled-reports',
       },
       {
         key: 'sentReports',
-        name: 'Sent Reports',
+        name: 'SentReports',
         path: 'reports/sent-reports',
       },
     ],
   },
   {
     key: 'summaryInformation',
-    name: 'Summary Information',
+    name: 'FinancialSummaryData',
     path: 'summary',
   },
 ];

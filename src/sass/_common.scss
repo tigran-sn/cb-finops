@@ -88,6 +88,23 @@
   margin-left: 30px !important;
 }
 
+.p-0 {
+  padding: 0 !important;
+}
+
+.p-1 {
+  padding: 15px !important;
+}
+
+.p-2 {
+  padding: 30px !important;
+}
+
+.px-0 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
 .px-1 {
   padding-right: 15px !important;
   padding-left: 15px !important;
@@ -96,6 +113,11 @@
 .px-2 {
   padding-right: 30px !important;
   padding-left: 30px !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .py-1 {
@@ -149,10 +171,10 @@
   background-color: rgb(41, 63, 80) !important;
 }
 
-.dropdown-width {
-  max-width: 330px;
-  width: 100%;
-}
+//.dropdown-width {
+//  max-width: 330px;
+//  width: 100%;
+//}
 
 .tableRow {
   width: 100%;

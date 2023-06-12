@@ -1,6 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 
 export class FilterModel {
-  transactionType: AbstractControl;
+  dealType: AbstractControl;
   range: AbstractControl;
 }

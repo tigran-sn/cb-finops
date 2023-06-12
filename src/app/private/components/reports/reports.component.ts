@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
-import { IReport } from '../../interfaces';
+import {IFilterData, IReport} from '../../interfaces';
 import { ReportsService } from '../../services';
 import { State, Store } from 'src/app/shared/store';
 import { delay } from 'rxjs';
@@ -57,8 +57,7 @@ export class RepotsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store.update({ showLoader: true });
     this.reportsService
-      .getReports({ reportType: ReportTypeEnum.All })
-      .pipe(delay(1500))
+      .getReports(ReportTypeEnum.All)
       .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
         if (res.success) {
           this.dataSource = new _MatTableDataSource(res.data.listItems);
@@ -83,7 +82,6 @@ export class RepotsComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // update the item in the table
         const index = this.dataSource.data.indexOf(item);
         this.dataSource.data[index] = result;
       }
@@ -104,7 +102,6 @@ export class RepotsComponent implements OnInit, AfterViewInit {
   // }
 
   edit(el: IReport): void {
-    console.log('edit', el);
     this.openEditDialog(el);
   }
 
@@ -120,5 +117,20 @@ export class RepotsComponent implements OnInit, AfterViewInit {
     this.router.navigate(['create'], {
       relativeTo: this.activatedRoute,
     });
+  }
+
+  filter(filterData: IFilterData): void {
+    this.store.update({ showLoader: true });
+    this.reportsService
+      .getReports(ReportTypeEnum.All, filterData)
+      .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
+        if (res.success) {
+          this.dataSource = new _MatTableDataSource(res.data.listItems);
+          this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort;
+
+          this.store.update({ showLoader: false });
+        }
+      });
   }
 }

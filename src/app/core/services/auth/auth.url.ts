@@ -1,6 +1,7 @@
 class AuthUrl {
   get login(): string {
-    return '/connect/token';
+    // return '/connect/token';
+    return '/api/Authenticate';
   }
 
   get logout(): string {

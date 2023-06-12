@@ -1,6 +1,14 @@
 class ReportsUrl {
   get getReports(): string {
-    return '/GetReports';
+    return '/api/GetReports';
+  }
+
+  get sendReports(): string {
+    return '/api/SendReports';
+  }
+
+  get getLookUps(): string {
+    return '/api/lookup/reports';
   }
 }
 

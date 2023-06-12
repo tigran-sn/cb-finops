@@ -1,16 +1,16 @@
 <div class="filters">
   <form [formGroup]="form">
     <mat-form-field appearance="fill" class="dropdown-width mr-1">
-      <mat-label>{{ "TransactionType" | translate }}</mat-label>
+      <mat-label>{{ "DealType" | translate }}</mat-label>
       <mat-select
-        formControlName="transactionType"
+        formControlName="dealType"
         (selectionChange)="onSelectChange($event)"
       >
         <mat-option
-          *ngFor="let transactionType of transactionTypes"
-          [value]="transactionType.value"
+          *ngFor="let dealType of dealTypes"
+          [value]="dealType.value"
         >
-          {{ transactionType.viewValue }}
+          {{ dealType.value | translate }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -38,11 +38,20 @@
         >Invalid end date</mat-error
       >
     </mat-form-field>
-    <button (click)="applyFilter()" mat-stroked-button color="primary" class="mr-1">
-      <mat-icon>autorenew</mat-icon> Apply
+    <button
+      mat-stroked-button
+      color="primary"
+      class="mx-1"
+      (click)="applyFilter()"
+    >
+      <mat-icon>autorenew</mat-icon> {{ "Apply" | translate }}
     </button>
-    <button (click)="resetFilter()" mat-stroked-button color="warn">
-      <mat-icon>clear</mat-icon> Clear
+    <button
+      mat-stroked-button
+      color="warn"
+      (click)="resetFilter()"
+    >
+      <mat-icon>clear</mat-icon> {{ "Clear" | translate }}
     </button>
   </form>
 </div>

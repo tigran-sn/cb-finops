@@ -9,6 +9,7 @@
   "CapsLock": "CapsLock is on",
   "TransactionNumber": "Transaction number",
   "TransactionType": "Transaction Type",
+  "DealType": "Deal Type",
   "Participant": "Participant",
   "Partner": "Partner",
 
@@ -16,6 +17,9 @@
   "CashCurrencySales": "Cash currency sales",
   "CashlessCurrencyPurchase": "Cashless currency purchase",
   "CashlessCurrencySales": "Cashless currency sales",
+
+  "Apply": "Apply",
+  "Clear": "Clear",
 
   "Reports": "Reports",
   "FilledReports": "Filled Reports",
@@ -37,5 +41,12 @@
 
   "SENT": "Sent",
   "FILLED": "Filled",
-  "SUMMARIZED": "Summarized"
+  "SUMMARIZED": "Summarized",
+
+  "NewReport": "New report",
+  "Register": "Register",
+  "Send": "Send",
+
+  "All": "All",
+  "LogOut": "Log out"
 }

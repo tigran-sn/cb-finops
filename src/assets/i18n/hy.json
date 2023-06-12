@@ -9,6 +9,7 @@
   "CapsLock": "CapsLock-ը միացված է",
   "TransactionNumber": "Գործարքի համար",
   "TransactionType": "Գործարքի տեսակ",
+  "DealType": "Գործարքի տեսակ",
   "Participant": "Մասնակից",
   "Partner": "Գործընկեր",
 
@@ -17,8 +18,35 @@
   "CashlessCurrencyPurchase": "Անկանխիկ արտարժույթի առք",
   "CashlessCurrencySales": "Անկանխիկ արտարժույթի վաճառք",
 
-  "Reports": "Reports",
-  "FilledReports": "Filled Reports",
-  "SentReports": "Sent Reports",
-  "FinancialSummaryData": "Financial Summary Data"
+  "Apply": "Թարմացնել",
+  "Clear": "Հեռացնել",
+
+  "Reports": "Հաղորդագրություններ",
+  "FilledReports": "Լրացված հաղորդագրություններ",
+  "SentReports": "Ուղարկված հաղորդագրություններ",
+  "FinancialSummaryData": "Ամփոփ տեղեկատվություն",
+
+  "Telephone": "Հեռախոս",
+  "PostalAddress": "Հասցե",
+  "StreetName": "Վազգեն Սարգսյան փ.6",
+
+  "BUY": "Կանխիկ արտարժույթի առք",
+  "SELL": "Կանխիկ արտարժույթի վաճառք",
+  "CLBUY": "Անկանխիկ արտարժույթի առք",
+  "CLSELL": "Անկանխիկ արտարժույթի վաճառք",
+
+  "ReportName": "Report name",
+  "DateTime": "Ամսաթիվ/Ժամ",
+  "Status": "Կարգավիճակ",
+
+  "SENT": "Ուղարկված",
+  "FILLED": "Լրացված",
+  "SUMMARIZED": "Ամփոփված",
+
+  "NewReport": "Նոր հաղորդագրություն",
+  "Register": "Գրանցել",
+  "Send": "Ուղարկել",
+
+  "All": "Բոլորը",
+  "LogOut": "Դուրս գալ"
 }

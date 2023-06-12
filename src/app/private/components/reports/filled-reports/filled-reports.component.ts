@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
 
-import { IReport } from '../../../interfaces';
+import {IFilterData, IReport} from '../../../interfaces';
 import { ReportsService } from '../../../services';
 import { State, Store } from 'src/app/shared/store';
 import { delay } from 'rxjs';
@@ -60,8 +60,7 @@ export class FilledReportsComponent {
   ngOnInit(): void {
     this.store.update({ showLoader: true });
     this.reportsService
-      .getReports(ReportTypeEnum.All)
-      .pipe(delay(1500))
+      .getReports(ReportTypeEnum.Filled)
       .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
         if (res.success) {
           this.dataSource = new _MatTableDataSource(res.data.listItems);
@@ -73,13 +72,13 @@ export class FilledReportsComponent {
       });
   }
 
-  private generateIds(reports: SelectionModel<ReportModel>): string {
-    return reports.selected.map(report => report.dealId).join();
-  }
-
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
+  }
+
+  private getIdList(reports: SelectionModel<ReportModel>): number[] {
+    return reports.selected.map(report => report.dealId);
   }
 
   openEditDialog(item: any) {
@@ -90,7 +89,6 @@ export class FilledReportsComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // update the item in the table
         const index = this.dataSource.data.indexOf(item);
         this.dataSource.data[index] = result;
       }
@@ -111,7 +109,6 @@ export class FilledReportsComponent {
   // }
 
   edit(el: IReport): void {
-    console.log('edit', el);
     this.openEditDialog(el);
   }
 
@@ -127,6 +124,21 @@ export class FilledReportsComponent {
     this.router.navigate(['create'], {
       relativeTo: this.activatedRoute,
     });
+  }
+
+  filter(filterData: IFilterData): void {
+    this.store.update({ showLoader: true });
+    this.reportsService
+      .getReports(ReportTypeEnum.All, filterData)
+      .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
+        if (res.success) {
+          this.dataSource = new _MatTableDataSource(res.data.listItems);
+          this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort;
+
+          this.store.update({ showLoader: false });
+        }
+      });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -157,7 +169,10 @@ export class FilledReportsComponent {
   }
 
   sendSelectedReports(reports: SelectionModel<ReportModel>): void {
-    let ids = this.generateIds(reports);
-    // TODO Implement service call
+    this.store.update({ showLoader: true });
+    this.reportsService.sendReports(this.getIdList(reports))
+      .subscribe((res) => {
+        this.store.update({ showLoader: false });
+      });
   }
 }

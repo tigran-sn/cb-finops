@@ -53,23 +53,16 @@ export class AuthService {
 
   login(
     loginModel: LoginModel
-  ): Observable<{ error?: object; access_token?: string }> {
+  ): Observable<{ error?: object; token?: string }> {
     this.helperService.setIgnoreGuardSetting(false);
-    const username = loginModel.email;
+    const username = loginModel.username;
     const password = loginModel.password;
-    const credentials = `username=${encodeURIComponent(
-      username
-    )}&password=${encodeURIComponent(
-      password as string
-    )}&client_id=${encodeURIComponent(
-      this.client_id
-    )}&grant_type=${encodeURIComponent(
-      this.grant_type
-    )}&client_secret=${encodeURIComponent(
-      this.client_secret
-    )}&scope=${encodeURIComponent(this.scope)}`;
+    const credentials = {
+      username: encodeURIComponent(username),
+      password: encodeURIComponent(password),
+    }
     return this.authorizationService.post(AUTH_API_URL.login, credentials, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { 'Content-Type': 'application/json' },
       queryParams: {},
     });
   }

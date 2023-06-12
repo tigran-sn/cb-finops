@@ -10,6 +10,7 @@ import { SentReportsComponent } from './sent-reports/sent-reports.component';
 import { DetailsComponent } from './details/details.component';
 import { CreateReportButtonComponent } from '../create-report-button/create-report-button.component';
 import { ReportsService } from '../../services';
+import {LookupsService} from "../../services/lookups/lookups.service";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,6 @@ import { ReportsService } from '../../services';
     CreateReportButtonComponent,
   ],
   imports: [CommonModule, ReportsRoutingModule, SharedModule],
-  providers: [ReportsService],
+  providers: [ReportsService, LookupsService],
 })
 export class ReportsModule {}

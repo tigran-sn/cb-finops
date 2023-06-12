@@ -2,7 +2,7 @@
   <h2 class="page__title fz-2 my-2">{{ "FilledReports" | translate }}</h2>
 
   <div class="is-flex is-justify-content-space-between my-2">
-    <app-filter></app-filter>
+    <app-filter (filter)="filter($event)"></app-filter>
     <app-create-report-button></app-create-report-button>
   </div>
 
@@ -156,7 +156,7 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.calculationDate }}
+              {{ element.calculationDate | date: 'dd/MM/yyyy' }}
             </div>
           </div>
         </mat-cell>
@@ -204,7 +204,6 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row
         *matRowDef="let row; columns: displayedColumns"
-        (click)="selection.toggle(row)"
       ></mat-row>
     </mat-table>
 

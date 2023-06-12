@@ -1,8 +1,8 @@
 <div class="page">
   <h2 class="page__title fz-2 my-2">{{ "Reports" | translate }}</h2>
 
-  <div class="is-flex is-justify-content-space-between is-align-items-center">
-    <app-filter></app-filter>
+  <div class="is-flex is-justify-content-space-between my-2">
+    <app-filter (filter)="filter($event)"></app-filter>
     <app-create-report-button></app-create-report-button>
   </div>
 
@@ -123,7 +123,7 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.calculationDate }}
+              {{ element.calculationDate | date: 'dd/MM/yyyy' }}
             </div>
           </div>
         </mat-cell>

@@ -1,5 +1,6 @@
 export interface ValidationMessages {
   email?: Array<TypesAndMessages>;
+  username?: Array<TypesAndMessages>;
   password?: Array<TypesAndMessages>;
 }
 

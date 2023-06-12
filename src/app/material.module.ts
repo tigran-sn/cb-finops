@@ -23,8 +23,10 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
-  NgxMatTimepickerModule,
+  // NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
+
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 const matModules = [
   MatSlideToggleModule,
@@ -48,6 +50,8 @@ const matModules = [
 
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
+  // NgxMatTimepickerModule,
+
   NgxMatTimepickerModule,
 ];
 

@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { RequiredValidator, EmailValidator } from '../../../shared/validators';
+import { RequiredValidator } from '../../../shared/validators';
 import { LoginFormModel } from '../../../core/infrastructure/models';
 import {
   Messages,
@@ -65,11 +65,10 @@ export class LoginComponent extends LoginBaseComponent implements OnInit {
 
   private initForm() {
     this.form = this.fb.group({
-      email: [
+      username: [
         '',
         Validators.compose([
           RequiredValidator.validate,
-          EmailValidator.validate,
         ]),
       ],
       password: ['', Validators.compose([RequiredValidator.validate])],
@@ -79,15 +78,14 @@ export class LoginComponent extends LoginBaseComponent implements OnInit {
 
   private setControls(): void {
     this.controls = {
-      email: this.form.get('email') as FormControl,
+      username: this.form.get('username') as FormControl,
       password: this.form.get('password') as FormControl,
     };
   }
 
   private getValidationMessages(): void {
-    this.validationMessages.email = [
+    this.validationMessages.username = [
       { type: 'required', message: Messages.required },
-      { type: 'validateEmail', message: 'IncorrectEmailError' },
     ];
     this.validationMessages.password = [
       { type: 'required', message: Messages.required },
