@@ -26,7 +26,7 @@ import { ReportTypeEnum } from 'src/app/core/infrastructure/enums';
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss'],
 })
-export class RepotsComponent implements OnInit, AfterViewInit {
+export class ReportsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
 
