@@ -1,5 +1,5 @@
 <div>
-  <h2 mat-dialog-title>Edit Item</h2>
+  <h2 mat-dialog-title>{{ "Edit" | translate }}</h2>
   <form [formGroup]="form" (ngSubmit)="save()" class="reportForm px-1">
     <div class="row row-2">
       <mat-form-field>
@@ -88,7 +88,7 @@
     <div class="row row-2">
       <!-- Sign date -->
       <mat-form-field appearance="fill">
-        <mat-label>{{ 'DealDate' | translate }}</mat-label>
+        <mat-label>{{ 'DateTime' | translate }}</mat-label>
         <input
           matInput
           [ngxMatDatetimePicker]="picker"
@@ -117,7 +117,7 @@
 
     <div class="row row-3">
       <mat-form-field>
-        <mat-label>{{ "ISOCode" | translate }}</mat-label>
+        <mat-label>{{ "CurrencyISOCode" | translate }}</mat-label>
         <mat-select formControlName="isocode">
           <mat-option *ngFor="let isocode of isocodes" [value]="isocode.value">{{ isocode.viewValue }}</mat-option>
         </mat-select>
@@ -170,9 +170,9 @@
         color="primary"
         type="submit"
         [disabled]="form.invalid && form.touched"
-      >{{ "Save" | translate }}</button>
+      >{{ "Update" | translate }}</button>
       <button mat-button type="button" (click)="dialogRef.close()">
-        Cancel
+        {{ "Cancel" | translate }}
       </button>
     </div>
   </form>

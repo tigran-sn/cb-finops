@@ -49,7 +49,7 @@
 <!--      </mat-form-field>-->
 
       <mat-form-field>
-        <mat-label>{{ 'DealDate' | translate }}</mat-label>
+        <mat-label>{{ 'DateTime' | translate }}</mat-label>
         <input
           matInput
           [ngxMatDatetimePicker]="picker"
@@ -83,7 +83,7 @@
 
     <div class="row row-3">
       <mat-form-field>
-        <mat-label>{{ "ISOCode" | translate }}</mat-label>
+        <mat-label>{{ "CurrencyISOCode" | translate }}</mat-label>
         <mat-select [formControl]="isocode">
           <mat-option value="option">Option</mat-option>
         </mat-select>

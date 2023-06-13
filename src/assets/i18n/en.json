@@ -20,6 +20,7 @@
 
   "Apply": "Apply",
   "Clear": "Clear",
+  "EnterRange": "Enter range",
 
   "Reports": "Reports",
   "FilledReports": "Filled Reports",
@@ -38,6 +39,9 @@
   "ReportName": "Report name",
   "DateTime": "Date/Time",
   "Status": "Status",
+  "Volume": "Volume",
+  "Rate": "Rate",
+  "CalculationDate": "Calculation Date",
 
   "SENT": "Sent",
   "FILLED": "Filled",
@@ -46,7 +50,19 @@
   "NewReport": "New report",
   "Register": "Register",
   "Send": "Send",
+  "Update": "Update",
+  "Cancel": "Cancel",
+  "Edit": "Edit",
+  "DateRange": "Enter a date range",
+  "Start": "Start date",
+  "End": "End date",
 
   "All": "All",
-  "LogOut": "Log out"
+  "LogOut": "Log out",
+
+  "No.": "No.",
+  "CurrencyISOCode": "Currency ISO code",
+  "TotalVolume": "Total volume",
+  "AverageRate": "Average rate",
+  "SummaryDealType": "Summary deal type"
 }
