@@ -21,6 +21,7 @@ import { ReportModel } from 'src/app/core/infrastructure/models';
 import { IResponse } from 'src/app/core/infrastructure/interfaces';
 import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
 import { ReportTypeEnum } from 'src/app/core/infrastructure/enums';
+import {appSettings} from "../../../../app.settings";
 
 @Component({
   selector: 'app-filled-reports',
@@ -83,7 +84,7 @@ export class FilledReportsComponent {
 
   openEditDialog(item: any) {
     const dialogRef = this.matDialog.open(EditDialogComponent, {
-      width: '600px',
+      width: `${appSettings.reports.modalWidth}px`,
       data: { item },
     });
 
@@ -129,7 +130,7 @@ export class FilledReportsComponent {
   filter(filterData: IFilterData): void {
     this.store.update({ showLoader: true });
     this.reportsService
-      .getReports(ReportTypeEnum.All, filterData)
+      .getReports(ReportTypeEnum.Filled, filterData)
       .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
         if (res.success) {
           this.dataSource = new _MatTableDataSource(res.data.listItems);

@@ -11,6 +11,7 @@ import {IResponse} from "../../../../core/infrastructure/interfaces";
 import {ListDataModel} from "../../../../core/infrastructure/models/shared/list-data.model";
 import {EditDialogComponent} from "../../edit-dialog/edit-dialog.component";
 import {IFilterData, IReport} from "../../../interfaces";
+import {appSettings} from "../../../../app.settings";
 
 @Component({
   selector: 'app-sent-reports',
@@ -67,7 +68,7 @@ export class SentReportsComponent {
 
   openEditDialog(item: any) {
     const dialogRef = this.matDialog.open(EditDialogComponent, {
-      width: '600px',
+      width: `${appSettings.reports.modalWidth}px`,
       data: { item },
     });
 

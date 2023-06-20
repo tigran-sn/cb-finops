@@ -19,6 +19,7 @@ import { ReportModel } from 'src/app/core/infrastructure/models';
 import { IResponse } from 'src/app/core/infrastructure/interfaces';
 import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
 import { ReportTypeEnum } from 'src/app/core/infrastructure/enums';
+import {appSettings} from "../../../app.settings";
 
 @Component({
   selector: 'app-reports',
@@ -75,7 +76,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   openEditDialog(item: any) {
     const dialogRef = this.matDialog.open(EditDialogComponent, {
-      width: '600px',
+      width: `${appSettings.reports.modalWidth}px`,
       data: { item },
     });
 

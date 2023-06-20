@@ -8,6 +8,7 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 import { PermissionsGuard } from './services/guard';
 import {SummaryService} from "./services/summary";
+import {PrivateResolverService} from "./services";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,6 @@ import {SummaryService} from "./services/summary";
     EditDialogComponent,
   ],
   imports: [CommonModule, SharedModule, PrivateRoutingModule],
-  providers: [PermissionsGuard, SummaryService],
+  providers: [PermissionsGuard, SummaryService, PrivateResolverService],
 })
 export class PrivateModule {}

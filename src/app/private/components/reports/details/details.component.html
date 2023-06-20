@@ -6,6 +6,16 @@
       <mat-form-field>
         <mat-label>{{ "TransactionNumber" | translate }}</mat-label>
         <input matInput [formControl]="dealId">
+        <mat-error
+          *ngIf="
+              dealId.invalid && (dealId.touched || submitted)
+            "
+        >{{
+          dealId.errors
+            | getFirstError : "dealId" : validationMessages
+            | translate
+          }}</mat-error
+        >
       </mat-form-field>
 
       <mat-form-field>
@@ -13,6 +23,16 @@
         <mat-select [formControl]="dealType">
           <mat-option value="option">Option</mat-option>
         </mat-select>
+        <mat-error
+          *ngIf="
+              dealType.invalid && (dealType.touched || submitted)
+            "
+        >{{
+          dealType.errors
+            | getFirstError : "dealType" : validationMessages
+            | translate
+          }}</mat-error
+        >
       </mat-form-field>
     </div>
 
@@ -23,6 +43,15 @@
         <mat-select [formControl]="participant">
           <mat-option value="option">Option</mat-option>
         </mat-select>
+        <mat-error
+          *ngIf="
+              participant.invalid && (participant.touched || submitted)
+            "
+        >{{
+          participant.errors
+            | getFirstError : "participant" : validationMessages
+            | translate
+          }}</mat-error>
         <!--      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>-->
       </mat-form-field>
 
@@ -31,6 +60,15 @@
         <mat-select [formControl]="partner">
           <mat-option value="option">Option</mat-option>
         </mat-select>
+        <mat-error
+          *ngIf="
+              partner.invalid && (partner.touched || submitted)
+            "
+        >{{
+          partner.errors
+            | getFirstError : "partner" : validationMessages
+            | translate
+          }}</mat-error>
       </mat-form-field>
     </div>
 
@@ -65,6 +103,15 @@
           [showSpinners]="true"
         >
         </ngx-mat-datetime-picker>
+        <mat-error
+          *ngIf="
+              dealDate.invalid && (dealDate.touched || submitted)
+            "
+        >{{
+          dealDate.errors
+            | getFirstError : "dealDate" : validationMessages
+            | translate
+          }}</mat-error>
       </mat-form-field>
 
 <!--      <mat-form-field>-->
@@ -78,6 +125,15 @@
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="calculationDate"></mat-datepicker-toggle>
         <mat-datepicker #calculationDate></mat-datepicker>
+        <mat-error
+          *ngIf="
+              participant.invalid && (participant.touched || submitted)
+            "
+        >{{
+          participant.errors
+            | getFirstError : "participant" : validationMessages
+            | translate
+          }}</mat-error>
       </mat-form-field>
     </div>
 
@@ -87,28 +143,57 @@
         <mat-select [formControl]="isocode">
           <mat-option value="option">Option</mat-option>
         </mat-select>
+        <mat-error
+          *ngIf="
+              isocode.invalid && (isocode.touched || submitted)
+            "
+        >{{
+          isocode.errors
+            | getFirstError : "isocode" : validationMessages
+            | translate
+          }}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ "Volume" | translate }}</mat-label>
         <input matInput [formControl]="volume">
+        <mat-error
+          *ngIf="
+              volume.invalid && (volume.touched || submitted)
+            "
+        >{{
+          volume.errors
+            | getFirstError : "volume" : validationMessages
+            | translate
+          }}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ "Rate" | translate }}</mat-label>
         <input matInput [formControl]="rate">
+        <mat-error
+          *ngIf="
+              rate.invalid && (rate.touched || submitted)
+            "
+        >{{
+          rate.errors
+            | getFirstError : "rate" : validationMessages
+            | translate
+          }}</mat-error>
       </mat-form-field>
     </div>
 
 <!--    <button mat-raised-button color="primary" type="submit">Submit</button>-->
     <div class="reportForm__buttons">
       <button
+        [disabled]="form.invalid && form.touched"
         mat-raised-button color="primary"
         type="button"
         class="mx-1"
         (click)="onRegister()"
       >{{ "Register" | translate }}</button>
       <button
+        [disabled]="form.invalid && form.touched"
         mat-raised-button color="primary"
         type="button"
         (click)="onSend()"

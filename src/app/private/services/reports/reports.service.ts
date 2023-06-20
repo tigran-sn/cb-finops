@@ -41,8 +41,8 @@ export class ReportsService {
     const queryParams = filterData?.dealType || filterData?.range?.start || filterData?.range?.end
       ? this.generateQueryParams(filterData)
       : '';
-    return this.httpService.get<IReport[]>(`${REPORTS_API_URL.getReports}?status=${reportType}${queryParams}`)
-      .pipe(map((res: IReport[]) => {
+    return this.httpService.get<ReportModel[]>(`${REPORTS_API_URL.getReports}?status=${reportType}${queryParams}`)
+      .pipe(map((res: ReportModel[]) => {
         return {
           success: true,
           data: {

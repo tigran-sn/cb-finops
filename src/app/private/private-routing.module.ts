@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PrivateResolverService } from './services';
 import { AuthGuardService } from '../core/services';
 import { PrivateComponent } from './private.component';
 import { SummaryComponent } from './components/summary/summary.component';
@@ -10,6 +11,9 @@ const routes: Routes = [
     path: '',
     component: PrivateComponent,
     canActivateChild: [AuthGuardService],
+    resolve: {
+      userClaimsData: PrivateResolverService
+    },
     children: [
       {
         path: '',

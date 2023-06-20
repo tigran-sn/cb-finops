@@ -15,8 +15,4 @@ export class UserService {
   getCurrentUserClaims(): Observable<IResponse<UserClaimModel>> {
     return this.http.get(USER_API_URL.currentUserClaims);
   }
-
-  acceptTC(): Observable<IResponse<null>> {
-    return this.http.put(USER_API_URL.acceptTC, {});
-  }
 }

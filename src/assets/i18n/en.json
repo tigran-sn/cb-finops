@@ -13,6 +13,10 @@
   "Participant": "Participant",
   "Partner": "Partner",
 
+  "Max17": "Maximum 17 characters long",
+  "IntegersOnly": "Only integers are allowed",
+  "RateFormat": "Enter 3 integers and 2 decimals",
+
   "CashCurrencyPurchase": "Cash currency purchase",
   "CashCurrencySales": "Cash currency sales",
   "CashlessCurrencyPurchase": "Cashless currency purchase",
@@ -41,6 +45,7 @@
   "Status": "Status",
   "Volume": "Volume",
   "Rate": "Rate",
+  "DealDate": "Deal Date",
   "CalculationDate": "Calculation Date",
 
   "SENT": "Sent",
@@ -50,6 +55,7 @@
   "NewReport": "New report",
   "Register": "Register",
   "Send": "Send",
+  "SendReports": "Send Reports",
   "Update": "Update",
   "Cancel": "Cancel",
   "Edit": "Edit",

@@ -33,4 +33,5 @@ export enum Urls {
   MCInfo = 'mc-info',
   MCDocuments = 'mc-documents',
   TruckBoard = 'truck-board',
+  Reports = 'reports',
 }

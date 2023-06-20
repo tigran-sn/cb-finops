@@ -38,7 +38,7 @@ export class TermsAndConditionsGuard implements CanLoad {
     return this.checkUserClaims().pipe(
       tap((hasAccess) => {
         if (!hasAccess) {
-          this.router.navigate([Urls.Home]);
+          this.router.navigate([Urls.Reports]);
         }
       })
     );

@@ -6,6 +6,9 @@ export class UserClaimModel {
   email: string;
   firstName: string;
   id: number;
+  bankId: string;
+  fullName: string;
+  username: string;
   isTCConditionsAccepted: boolean;
   lastName: string;
   menuItems: Array<IMenu> = [];
