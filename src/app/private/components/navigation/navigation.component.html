@@ -32,5 +32,23 @@
       </a>
     </ng-template>
   </ng-container>
-  <a class="navigation__item" (click)="logout()" mat-button>{{ "LogOut" | translate }}</a>
+
+  <button
+    mat-button
+    [matMenuTriggerFor]="currentUser"
+    class="is-flex is-flex-direction-row-reverse"
+  >
+    {{ (userClaims$ | async)?.bankId }}
+    ({{ (userClaims$ | async)?.fullName }})
+    <mat-icon>expand_more</mat-icon>
+  </button>
+  <mat-menu #currentUser="matMenu" xPosition="before">
+    <a
+      mat-menu-item
+      class="navigation__item"
+      (click)="logout()"
+    >
+      {{ "LogOut" | translate }}
+    </a>
+  </mat-menu>
 </nav>

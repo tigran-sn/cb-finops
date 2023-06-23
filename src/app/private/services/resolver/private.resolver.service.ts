@@ -29,7 +29,7 @@ export class PrivateResolverService implements Resolve<UserClaimModel> {
     } else {
       return this.userService
         .getCurrentUserClaims()
-        .pipe(map((res) => res.data));
+        .pipe(map((res: any) => res));
     }
   }
 }

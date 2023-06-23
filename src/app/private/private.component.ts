@@ -24,8 +24,9 @@ export class PrivateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data
       .pipe(first())
-      .subscribe(() => {
+      .subscribe((response: any) => {
         this.languageService.setLanguage(Languages.Armenian);
+        this.store.update({ userClaims: response.userClaimsData });
       });
   }
 

@@ -18,6 +18,7 @@ import { UserService } from '../../services/user';
 })
 export class NavigationComponent {
   paths: IMenu[] = PATHS;
+  userClaims$ = this.store.select(state => state.userClaims);
 
   constructor(
     private store: Store<State>,
