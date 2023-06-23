@@ -42,6 +42,7 @@
 
   "ReportName": "Report name",
   "DateTime": "Date/Time",
+  "Date": "Date",
   "Status": "Status",
   "Volume": "Volume",
   "Rate": "Rate",

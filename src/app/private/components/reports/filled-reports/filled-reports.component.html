@@ -156,7 +156,7 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.calculationDate | date: 'dd/MM/yyyy' }}
+              {{ element.calculationDate ? (element.calculationDate | date: 'dd/MM/yyyy') : '--' }}
             </div>
           </div>
         </mat-cell>
