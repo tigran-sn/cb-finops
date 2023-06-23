@@ -28,8 +28,8 @@ export class AuthPublicGuardService implements CanActivate, CanActivateChild {
       const navUrl = navigationExtras.queryParams?.['redirectUrl']
         ? queryParams
           ? queryParams
-          : Urls.Home
-        : Urls.Home;
+          : Urls.Reports
+        : Urls.Reports;
       this.router.navigateByUrl(decodeURIComponent(navUrl));
       return false;
     }
