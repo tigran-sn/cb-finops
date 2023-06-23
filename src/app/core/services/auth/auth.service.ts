@@ -89,18 +89,9 @@ export class AuthService {
     return this.strategy.getToken();
   }
 
-  // get currentUser(): Promise<object> {
-  //   return this.userService.getCurrentUserClaims().toPromise();
-  // }
-  async currentUser(): Promise<object> {
-    const userClaimResponse = await this.userService
-      .getCurrentUserClaims()
-      .toPromise();
-    if (userClaimResponse && userClaimResponse.data) {
-      return userClaimResponse.data as object;
-    } else {
-      throw new Error('User claims not found');
-    }
+  get currentUser():  Promise<IResponse<UserClaimModel> | undefined>  {
+    debugger;
+    return this.userService.getCurrentUserClaims().toPromise();
   }
 
   checkUserToken(): void {
