@@ -17,6 +17,9 @@
   "IntegersOnly": "Թույլատրվում են միայն ամբողջ թվեր",
   "RateFormat": "Մուտքագրեք 3 ամբողջ և 2 տասնորդական",
 
+  "PageNotFound": "Էջը չի գտնվել",
+  "ReturnToMainPage": "Վերադառնալ գլխավոր էջ",
+
   "CashCurrencyPurchase": "Կանխիկ արտարժույթի առք",
   "CashCurrencySales": "Կանխիկ արտարժույթի վաճառք",
   "CashlessCurrencyPurchase": "Անկանխիկ արտարժույթի առք",

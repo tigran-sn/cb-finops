@@ -17,6 +17,9 @@
   "IntegersOnly": "Only integers are allowed",
   "RateFormat": "Enter 3 integers and 2 decimals",
 
+  "PageNotFound": "Page not found",
+  "ReturnToMainPage": "Return to main page",
+
   "CashCurrencyPurchase": "Cash currency purchase",
   "CashCurrencySales": "Cash currency sales",
   "CashlessCurrencyPurchase": "Cashless currency purchase",

@@ -1,11 +1,8 @@
-<mat-card>
-  <mat-card-title>Page not found</mat-card-title>
-  <mat-card-content>
-    <p>The page you requested does not exist.</p>
-  </mat-card-content>
-  <mat-card-actions>
+<div class="mainContent is-flex is-justify-content-center is-align-items-center">
+  <div class="is-flex is-align-items-center is-flex-direction-column">
+    <h1>{{ "PageNotFound" | translate }}</h1>
     <button mat-raised-button color="primary" (click)="goToHome()">
-      Go to home page
+      {{ "ReturnToMainPage" | translate }}
     </button>
-  </mat-card-actions>
-</mat-card>
+  </div>
+</div>
