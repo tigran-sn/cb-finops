@@ -8,3 +8,11 @@ mat-toolbar {
 .mat-mdc-menu-panel.mat-mdc-menu-panel {
   max-width: none !important;
 }
+
+mat-header-row {
+  background: #e5e5e5 !important;
+}
+
+mat-header-cell, mat-header-row, .mat-header-cell-def {
+  font-weight: bold !important;
+}

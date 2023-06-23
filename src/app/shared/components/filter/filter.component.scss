@@ -1,1 +1,11 @@
-
+:host {
+  ::ng-deep .mdc-text-field--disabled.mdc-text-field--filled {
+    background-color: transparent !important;
+    .mdc-line-ripple::before {
+      border-bottom-color: rgba(0, 0, 0, 0.42);
+    }
+    mat-label {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
