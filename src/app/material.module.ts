@@ -17,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 
@@ -47,6 +48,7 @@ const matModules = [
   MatDialogModule,
   MatProgressSpinnerModule,
   MatMenuModule,
+  MatSnackBarModule,
 
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,

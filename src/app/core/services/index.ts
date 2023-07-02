@@ -1,4 +1,4 @@
-// export * from './notification-service';
+export * from './notification.service';
 export * from './auth';
 export * from './helper';
 // export * from './password-setup-guard';
