@@ -6,3 +6,4 @@ export * from './validate-code-model';
 export * from './look-up.model';
 
 export * from '../reports';
+export * from './partner.model';

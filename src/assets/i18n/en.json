@@ -5,7 +5,10 @@
   "IncorrectEmailError": "Incorrect email format",
   "Login": "Login",
   "RequiredField": "Required field",
+  "Username": "Username",
   "Password": "Password",
+  "No": "No",
+  "Yes": "Yes",
   "CapsLock": "CapsLock is on",
   "TransactionNumber": "Transaction number",
   "TransactionType": "Transaction Type",
@@ -45,6 +48,7 @@
 
   "ReportName": "Report name",
   "DateTime": "Date/Time",
+  "Time": "Time",
   "Date": "Date",
   "Status": "Status",
   "Volume": "Volume",

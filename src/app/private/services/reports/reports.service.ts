@@ -3,11 +3,16 @@ import { HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { HttpService } from 'src/app/http';
 
-import { IResponse } from 'src/app/core/infrastructure/interfaces';
+import {IPartner, IResponse} from 'src/app/core/infrastructure/interfaces';
 import { ReportModel } from 'src/app/core/infrastructure/models/reports/report.model';
 import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
 import { REPORTS_API_URL } from './reports.url';
-import {ReportsLookupModel, ReportsSearchModel} from 'src/app/core/infrastructure/models';
+import {
+  PartnerModel,
+  ReportCreationModel,
+  ReportsLookupModel,
+  ReportsSearchModel
+} from 'src/app/core/infrastructure/models';
 
 import {ISOCODES, REPORTS} from '../../mocks';
 import { ReportTypeEnum } from "../../../core/infrastructure/enums";
@@ -57,6 +62,10 @@ export class ReportsService {
     return this.httpService.post(`${REPORTS_API_URL.sendReports}`, reportIdList);
   }
 
+  createReport(reportBody: ReportCreationModel): Observable<string> {
+    return this.httpService.post(`${REPORTS_API_URL.createReport}`, reportBody);
+  }
+
   getLookUps(): Observable<IResponse<ReportsLookupModel>> {
     return of({
       data: {
@@ -67,5 +76,18 @@ export class ReportsService {
       success: true,
     })
     return this.httpService.get(`${REPORTS_API_URL.getLookUps}`);
+  }
+
+  getPartnersList(): Observable<IResponse<ListDataModel<PartnerModel>>> {
+    return this.httpService.get<PartnerModel[]>(`${REPORTS_API_URL.getPartnersList}`)
+      .pipe(map((res: PartnerModel[]) => {
+        return {
+          success: true,
+          data: {
+            totalCount: res.length,
+            listItems: [...res],
+          },
+        };
+      }));
   }
 }

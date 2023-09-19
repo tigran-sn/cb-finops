@@ -50,7 +50,11 @@
       <!-- Partner -->
       <mat-form-field>
         <mat-label>{{ "Partner" | translate }}</mat-label>
-        <input matInput formControlName="partner" />
+        <mat-select formControlName="partner">
+          <mat-option *ngFor="let partner of partners" [value]="partner.id">
+            {{partner.name}}
+          </mat-option>
+        </mat-select>
         <mat-error
           *ngIf="
             controls.partner.invalid && (controls.partner.touched || submitted)
@@ -85,33 +89,22 @@
       </mat-form-field>
     </div>
 
-    <div class="row row-2">
-      <!-- Sign date -->
+    <div class="row row-1">
       <mat-form-field appearance="fill">
         <mat-label>{{ 'DateTime' | translate }}</mat-label>
-        <input
-          matInput
-          [ngxMatDatetimePicker]="picker"
-          formControlName="dealDate" />
+        <input matInput [ngxMatDatetimePicker]="dealDatePicker" formControlName="dealDate">
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="$any(picker)"
-        >
-        </mat-datepicker-toggle>
-        <ngx-mat-datetime-picker
-          #picker
-          [showSpinners]="true"
-        >
-        </ngx-mat-datetime-picker>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{ "CalculationDate" | translate }}</mat-label>
-        <input matInput [matDatepicker]="calculationDate" formControlName="calculationDate">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="calculationDate"></mat-datepicker-toggle>
-        <mat-datepicker #calculationDate></mat-datepicker>
+        <mat-datepicker-toggle matSuffix [for]="$any(dealDatePicker)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #dealDatePicker></ngx-mat-datetime-picker>
+        <mat-error
+          *ngIf="
+              controls.dealDate.invalid && (controls.dealDate.touched || submitted)
+            "
+        >{{
+          controls.dealDate.errors
+            | getFirstError : "dealDate" : validationMessages
+            | translate
+          }}</mat-error>
       </mat-form-field>
     </div>
 

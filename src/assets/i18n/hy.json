@@ -5,7 +5,10 @@
   "IncorrectEmailError": "Էլ. փոստի սխալ ձևաչափ",
   "Login": "Մուտք",
   "RequiredField": "Դաշտը դատարկ լինել չի կարող",
+  "Username": "Մուտքանուն",
   "Password": "Գաղտնաբառ",
+  "No": "Ոչ",
+  "Yes": "Այո",
   "CapsLock": "CapsLock-ը միացված է",
   "TransactionNumber": "Գործարքի համար",
   "TransactionType": "Գործարքի տեսակ",
@@ -44,6 +47,7 @@
 
   "ReportName": "Հաղորդագրության անվանում",
   "DateTime": "Ամսաթիվ/Ժամ",
+  "Time": "Ժամ",
   "Date": "Ամսաթիվ",
   "Status": "Կարգավիճակ",
   "Volume": "Գործարքի ծավալ",

@@ -20,7 +20,7 @@ import { switchMap } from 'rxjs';
 import { ReportModel } from 'src/app/core/infrastructure/models';
 import { IResponse } from 'src/app/core/infrastructure/interfaces';
 import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
-import { ReportTypeEnum } from 'src/app/core/infrastructure/enums';
+import {ReportTypeEnum, Urls} from 'src/app/core/infrastructure/enums';
 import {appSettings} from "../../../../app.settings";
 
 @Component({
@@ -183,7 +183,7 @@ export class FilledReportsComponent {
           this.dataSource.paginator = this.paginator;
           this.selection = new SelectionModel<ReportModel>(true, []);
           // this.dataSource.sort = this.sort;
-
+          this.router.navigate([`./${Urls.Reports}/${Urls.SentReports}`]);
           this.store.update({ showLoader: false });
         }
       });

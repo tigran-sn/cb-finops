@@ -41,9 +41,9 @@ export class LanguageService {
   }
 
   reset(): void {
-    this.translateService.use(Languages.English);
-    this.currentLanguage.next(Languages.English);
-    moment.locale(MomentJSLocale.English);
+    this.translateService.use(Languages.Armenian);
+    this.currentLanguage.next(Languages.Armenian);
+    moment.locale(MomentJSLocale.Armenian);
     this.localStorage.remove('language');
   }
 

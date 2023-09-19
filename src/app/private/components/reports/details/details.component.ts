@@ -1,29 +1,65 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatDatepickerInputEvent} from "@angular/material/datepicker";
-import {ValidationMessages, Messages} from "../../../../core/infrastructure/interfaces";
+import {IPartner, IResponse, Messages, ValidationMessages} from "../../../../core/infrastructure/interfaces";
 import {IntegerValidator, MaxCharacterValidator, RateFormatValidator} from "../../../../shared/validators";
 import {appSettings} from "../../../../app.settings";
+import {State, Store} from "../../../../shared/store";
+import {Observable, Subject, takeUntil} from "rxjs";
+import {ReportsService} from "../../../services";
+import {LookUpModel, ReportsLookupModel} from "../../../../core/infrastructure/models";
+import {map} from "rxjs/operators";
+import {LookupsService} from "../../../services/lookups/lookups.service";
+import {Router} from "@angular/router";
+import {Urls} from "../../../../core/infrastructure/enums";
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
   submitted: boolean;
   validationMessages: ValidationMessages = {};
   form: FormGroup;
+  bankId: string;
+  partners: IPartner[];
+  dealTypes: Array<LookUpModel> = [];
+  isocodes: Array<LookUpModel> = [];
+  isSend = false;
 
-  constructor(private fb: FormBuilder) {}
+  private destroy$: Subject<void> = new Subject<void>();
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<State>,
+    private reportsService: ReportsService,
+    private lookupsService: LookupsService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
+    this.getLookUps().subscribe();
+    this.store.select((state: State) => state.userClaims)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((userClaims) => {
+        if(userClaims) {
+          this.bankId = userClaims.bankId;
+        }
+      });
+    this.reportsService.getPartnersList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        if(res.success) {
+          this.partners = res.data.listItems;
+        }
+      });
     this.initForm();
     this.getValidationMessages();
   }
 
-  get dealId(): FormControl {
-    return this.form.get('dealId') as FormControl;
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   get participant(): FormControl {
@@ -42,10 +78,6 @@ export class DetailsComponent implements OnInit {
     return this.form.get('dealDate') as FormControl;
   }
 
-  get calculationDate(): FormControl {
-    return this.form.get('calculationDate') as FormControl;
-  }
-
   get isocode(): FormControl {
     return this.form.get('isocode') as FormControl;
   }
@@ -60,13 +92,10 @@ export class DetailsComponent implements OnInit {
 
   private initForm(): void {
     this.form = this.fb.group({
-      dealId: ['', Validators.required],
-      participant: ['', Validators.required],
+      participant: [this.bankId],
       dealType: ['', Validators.required],
       partner: ['', Validators.required],
       dealDate: [null, Validators.required],
-      // dealTime: [null, Validators.required],
-      calculationDate: [null, Validators.required],
       isocode: ['', Validators.required],
       volume: ['',
         Validators.compose([
@@ -83,9 +112,6 @@ export class DetailsComponent implements OnInit {
   }
 
   private getValidationMessages(): void {
-    this.validationMessages.dealId = [
-      { type: 'required', message: Messages.required },
-    ]
     this.validationMessages.participant = [
       { type: 'required', message: Messages.required },
     ]
@@ -96,9 +122,6 @@ export class DetailsComponent implements OnInit {
       { type: 'required', message: Messages.required },
     ]
     this.validationMessages.dealDate = [
-      { type: 'required', message: Messages.required },
-    ]
-    this.validationMessages.calculationDate = [
       { type: 'required', message: Messages.required },
     ]
     this.validationMessages.isocode = [
@@ -115,34 +138,49 @@ export class DetailsComponent implements OnInit {
     ]
   }
 
-  onRegister(): void {
-    this.submitted = true;
-    // console.log(this.form.value);
+  private getLookUps(): Observable<IResponse<ReportsLookupModel>> {
+    return this.lookupsService.getLookUps().pipe(
+      map((res: IResponse<ReportsLookupModel>) => {
+        if (res.success) {
+          this.dealTypes = res.data.dealTypes;
+          this.isocodes = res.data.isocodes;
+        }
+        return res;
+      })
+    )
+  }
+
+  private createReport() {
+    this.store.update({ showLoader: true });
     if (this.form.valid) {
-      // Process the form data here
-      console.log(this.form.value);
+      this.submitted = true;
+      const reportModel = {
+        dealType: this.dealType.value,
+        partner: this.partner.value,
+        isocode: this.isocode.value,
+        volume: this.volume.value,
+        rate: this.rate.value,
+        dealDate: this.dealDate.value,
+        isSend: this.isSend,
+      }
+      this.reportsService.createReport(reportModel).subscribe((res) => {
+        if(this.isSend) {
+          this.router.navigate([`./${Urls.Reports}/${Urls.SentReports}`]);
+        } else {
+          this.router.navigate([`./${Urls.Reports}/${Urls.FilledReports}`]);
+        }
+        this.store.update({ showLoader: false });
+      })
     }
+  }
+
+  onRegister(): void {
+    this.isSend = false;
+    this.createReport();
   }
 
   onSend(): void {
-    this.submitted = true;
-    // console.log(this.form.value);
-    if (this.form.valid) {
-      // Process the form data here
-      console.log(this.form.value);
-    }
-  }
-
-  onDateSelected(event: MatDatepickerInputEvent<Date>): void {
-    // Handle datepicker selection here
-    console.log(event.value);
-  }
-
-  dealDateChange(type: string, event: any): void {
-    this.dealDate.setValue(event.value);
-  }
-
-  calculationDateChange(type: string, event: any): void {
-    this.calculationDate.setValue(event.value);
+    this.isSend = true;
+    this.createReport();
   }
 }

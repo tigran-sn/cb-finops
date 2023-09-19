@@ -3,11 +3,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IConfirmDialogData } from '../../interfaces';
+import {SharedModule} from "../../shared.module";
 
 @Component({
   selector: 'app-confirm-dialog',
   standalone: true,
-  imports: [MatIconModule,MatDialogModule,MatButtonModule],
+  imports: [MatIconModule, MatDialogModule, MatButtonModule, SharedModule],
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss']
 })

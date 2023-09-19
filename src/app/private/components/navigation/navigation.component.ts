@@ -32,9 +32,13 @@ export class NavigationComponent {
   ) // public app: AppComponent
   {}
 
+  // @needConfirmation({
+  //   title: 'Log Out',
+  //   message: 'Are you sure you want to log out?',
+  // })
   @needConfirmation({
-    title: 'Log Out',
-    message: 'Are you sure you want to log out?',
+    title: 'Դուրս գալ',
+    message: 'Համոզվա՞ծ եք, որ ցանկանում եք դուրս գալ:',
   })
   logout(): void {
     this.helperService.setIgnoreGuardSetting(true);

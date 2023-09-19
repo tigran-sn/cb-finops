@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   FormBuilder,
@@ -11,37 +11,54 @@ import {
   MaxCharacterValidator,
   RateFormatValidator,
 } from '../../../shared/validators';
-import {IResponse, Messages, ValidationMessages} from 'src/app/core/infrastructure/interfaces';
-import {Observable} from "rxjs";
+import {IPartner, IResponse, Messages, ValidationMessages} from 'src/app/core/infrastructure/interfaces';
+import {Observable, Subject, takeUntil} from "rxjs";
 import {LookUpModel, ReportsLookupModel} from "../../../core/infrastructure/models";
 import {map} from "rxjs/operators";
 import {LookupsService} from "../../services/lookups/lookups.service";
 import {appSettings} from "../../../app.settings";
+import {ReportsService} from "../../services";
 
 @Component({
   selector: 'app-edit-dialog',
   templateUrl: './edit-dialog.component.html',
 })
-export class EditDialogComponent implements OnInit {
+export class EditDialogComponent implements OnInit, OnDestroy {
   form: FormGroup;
   controls: any;
   submitted: boolean;
   validationMessages: ValidationMessages = {};
   dealTypes: Array<LookUpModel> = [];
   isocodes: Array<LookUpModel> = [];
+  partners: IPartner[];
   statuses: Array<LookUpModel> = [];
+
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogComponent>,
     private fb: FormBuilder,
     private lookupsService: LookupsService,
+    private reportsService: ReportsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 
   ngOnInit(): void {
     this.getLookUps().subscribe();
+    this.reportsService.getPartnersList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        if(res.success) {
+          this.partners = res.data.listItems;
+        }
+      });
     this.initForm();
     this.getValidationMessages();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm() {
@@ -51,8 +68,6 @@ export class EditDialogComponent implements OnInit {
       dealType: [this.data.item.dealType, Validators.required],
       partner: [this.data.item.partner, Validators.required],
       dealDate: [this.data.item.dealDate, Validators.required],
-      // dealTime: [null, Validators.required],
-      calculationDate: [this.data.item.calculationDate, Validators.required],
       isocode: [this.data.item.isocode, Validators.required],
       volume: [this.data.item.volume,
         Validators.compose([
@@ -76,7 +91,6 @@ export class EditDialogComponent implements OnInit {
       dealType: this.form.get('dealType') as FormControl,
       partner: this.form.get('partner') as FormControl,
       dealDate: this.form.get('dealDate') as FormControl,
-      calculationDate: this.form.get('calculationDate') as FormControl,
       isocode: this.form.get('isocode') as FormControl,
       volume: this.form.get('volume') as FormControl,
       rate: this.form.get('rate') as FormControl,
@@ -97,9 +111,6 @@ export class EditDialogComponent implements OnInit {
       { type: 'required', message: Messages.required },
     ]
     this.validationMessages.dealDate = [
-      { type: 'required', message: Messages.required },
-    ]
-    this.validationMessages.calculationDate = [
       { type: 'required', message: Messages.required },
     ]
     this.validationMessages.isocode = [

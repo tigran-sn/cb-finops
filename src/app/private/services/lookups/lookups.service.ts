@@ -19,6 +19,7 @@ export class LookupsService {
       },
       success: true,
     })
-    return this.httpService.get(`${LOOKUPS_API_URL.getLookUps}`);
+    // TODO Apply the code below after BE will provide lookups
+    // return this.httpService.get(`${LOOKUPS_API_URL.getLookUps}`);
   }
 }

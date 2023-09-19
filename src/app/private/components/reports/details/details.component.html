@@ -2,26 +2,13 @@
   <h2 class="page__title fz-2 my-2">{{ "NewReport" | translate }}</h2>
 
   <form [formGroup]="form" class="reportForm">
-    <div class="row row-2">
-      <mat-form-field>
-        <mat-label>{{ "TransactionNumber" | translate }}</mat-label>
-        <input matInput [formControl]="dealId">
-        <mat-error
-          *ngIf="
-              dealId.invalid && (dealId.touched || submitted)
-            "
-        >{{
-          dealId.errors
-            | getFirstError : "dealId" : validationMessages
-            | translate
-          }}</mat-error
-        >
-      </mat-form-field>
-
+    <div class="row row-1">
       <mat-form-field>
         <mat-label>{{ "TransactionType" | translate }}</mat-label>
         <mat-select [formControl]="dealType">
-          <mat-option value="option">Option</mat-option>
+          <mat-option *ngFor="let dealType of dealTypes" [value]="dealType.value">
+            {{dealType.value | translate}}
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="
@@ -39,10 +26,10 @@
     <div class="row row-2">
       <mat-form-field>
         <mat-label>{{ "Participant" | translate }}</mat-label>
-        <!--      <input matInput formControlName="participant">-->
-        <mat-select [formControl]="participant">
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
+          <input matInput [formControl]="participant" readonly>
+<!--        <mat-select [formControl]="participant">-->
+<!--          <mat-option value="option">Option</mat-option>-->
+<!--        </mat-select>-->
         <mat-error
           *ngIf="
               participant.invalid && (participant.touched || submitted)
@@ -58,7 +45,9 @@
       <mat-form-field>
         <mat-label>{{ "Partner" | translate }}</mat-label>
         <mat-select [formControl]="partner">
-          <mat-option value="option">Option</mat-option>
+          <mat-option *ngFor="let partner of partners" [value]="partner.id">
+            {{partner.name}}
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="
@@ -72,37 +61,13 @@
       </mat-form-field>
     </div>
 
-    <div class="row row-2">
-<!--      <mat-form-field>-->
-<!--        <mat-label>{{ "DealDate" | translate }}</mat-label>-->
-<!--        <input matInput [matDatepicker]="dealDate" (dateChange)="dealDateChange('change', $event)">-->
-<!--        <mat-hint>MM/DD/YYYY</mat-hint>-->
-<!--        <mat-datepicker-toggle matIconSuffix [for]="dealDate"></mat-datepicker-toggle>-->
-<!--        <mat-datepicker #dealDate></mat-datepicker>-->
-<!--      </mat-form-field>-->
-
-<!--      <mat-form-field>-->
-<!--        <mat-label>{{ "DealTime" | translate }}</mat-label>-->
-<!--        <ngx-mat-timepicker [formControl]="dealTime"></ngx-mat-timepicker>-->
-<!--      </mat-form-field>-->
-
+    <div class="row row-1">
       <mat-form-field>
         <mat-label>{{ 'DateTime' | translate }}</mat-label>
-        <input
-          matInput
-          [ngxMatDatetimePicker]="picker"
-          [formControl]="dealDate" />
+        <input matInput [ngxMatDatetimePicker]="dealDatePicker" [formControl]="dealDate">
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="$any(picker)"
-        >
-        </mat-datepicker-toggle>
-        <ngx-mat-datetime-picker
-          #picker
-          [showSpinners]="true"
-        >
-        </ngx-mat-datetime-picker>
+        <mat-datepicker-toggle matSuffix [for]="$any(dealDatePicker)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #dealDatePicker></ngx-mat-datetime-picker>
         <mat-error
           *ngIf="
               dealDate.invalid && (dealDate.touched || submitted)
@@ -113,35 +78,15 @@
             | translate
           }}</mat-error>
       </mat-form-field>
-
-<!--      <mat-form-field>-->
-<!--        <input [ngxMatTimepicker]="dealTime">-->
-<!--        <ngx-mat-timepicker #dealTime></ngx-mat-timepicker>-->
-<!--      </mat-form-field>-->
-
-      <mat-form-field>
-        <mat-label>{{ "CalculationDate" | translate }}</mat-label>
-        <input matInput [matDatepicker]="calculationDate" (dateChange)="calculationDateChange('change', $event)">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="calculationDate"></mat-datepicker-toggle>
-        <mat-datepicker #calculationDate></mat-datepicker>
-        <mat-error
-          *ngIf="
-              participant.invalid && (participant.touched || submitted)
-            "
-        >{{
-          participant.errors
-            | getFirstError : "participant" : validationMessages
-            | translate
-          }}</mat-error>
-      </mat-form-field>
     </div>
 
     <div class="row row-3">
       <mat-form-field>
         <mat-label>{{ "CurrencyISOCode" | translate }}</mat-label>
         <mat-select [formControl]="isocode">
-          <mat-option value="option">Option</mat-option>
+          <mat-option *ngFor="let isocode of isocodes" [value]="isocode.value">
+            {{isocode.viewValue}}
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="

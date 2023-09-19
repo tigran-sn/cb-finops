@@ -7,8 +7,20 @@ class ReportsUrl {
     return '/api/SendReports';
   }
 
+  get createReport(): string {
+    return '/api/CreateReport';
+  }
+
+  get updateReport(): string {
+    return '/api/UpdateReport';
+  }
+
   get getLookUps(): string {
     return '/api/lookup/reports';
+  }
+
+  get getPartnersList(): string {
+    return '/api/GetPartnersList';
   }
 }
 
