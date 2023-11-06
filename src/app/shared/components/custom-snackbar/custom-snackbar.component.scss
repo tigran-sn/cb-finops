@@ -1,0 +1,24 @@
+:host {
+  .custom-snackbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    &__data {
+      display: flex;
+      align-items: flex-start;
+      span {
+        display: block;
+        max-width: 200px;
+      }
+    }
+    .mat-icon {
+      font-size: 1.7rem;
+      height: 2rem;
+      width: 2rem;
+      margin-right: .5rem;
+      &:nth-child(2) {
+        color: #fff;
+      }
+    }
+  }
+}

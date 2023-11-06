@@ -13,6 +13,7 @@ import { GetFirstErrorPipe } from './pipes';
 import { FilterComponent } from './components/filter/filter.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component';
 
 const COMPONENTS = [
   NotFoundComponent,
@@ -20,6 +21,7 @@ const COMPONENTS = [
   FilterComponent,
   HeaderComponent,
   FooterComponent,
+  CustomSnackbarComponent,
 ];
 
 const PIPES = [GetFirstErrorPipe];
