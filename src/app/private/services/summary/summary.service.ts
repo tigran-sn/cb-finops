@@ -10,20 +10,25 @@ import {SummaryLookupModel, SummaryModel} from 'src/app/core/infrastructure/mode
 import {ISOCODES, REPORTS} from '../../mocks';
 import {DEAL_TYPES} from "../../mocks/deal-types.mock";
 import {map} from "rxjs/operators";
-import {ISummary} from "../../interfaces";
+import {IPaginationParams, ISummary} from "../../interfaces";
+import {ISummaryResponse} from "../../interfaces/summary-response.interface";
+import {HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class SummaryService {
   constructor(private httpService: HttpService) {}
 
-  getSummaries(): Observable<IResponse<ListDataModel<SummaryModel>>> {
-    return this.httpService.get<ISummary[]>(`${SUMMARY_URL.getSummaryData}`)
-      .pipe(map((res: ISummary[]) => {
+  getSummaries(paginationParams?: IPaginationParams,): Observable<IResponse<ListDataModel<SummaryModel>>> {
+    let queryParams = paginationParams?.pageNumber ?? paginationParams?.pageSize
+      ? this.generatePaginationParams(paginationParams)
+      : '';
+    return this.httpService.get<ISummaryResponse>(`${SUMMARY_URL.getSummaryData}?${queryParams}`)
+      .pipe(map((res: ISummaryResponse) => {
         return {
           success: true,
           data: {
-            totalCount: res.length,
-            listItems: [...res],
+            totalCount: res.pagination.totalCount,
+            listItems: [...res.summaryReports],
           },
         };
       }));
@@ -39,5 +44,17 @@ export class SummaryService {
       success: true,
     })
     return this.httpService.get(`${SUMMARY_URL.getLookUps}`);
+  }
+
+  private generatePaginationParams(paginationParams: IPaginationParams): string {
+    let params = new HttpParams();
+
+    if (paginationParams) {
+      params = params.appendAll({
+        ...(paginationParams.pageSize && { pageSize: paginationParams.pageSize }),
+        ...(paginationParams.pageNumber && { pageNumber: paginationParams.pageNumber }),
+      });
+    }
+    return params.toString();
   }
 }
