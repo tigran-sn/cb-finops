@@ -18,7 +18,7 @@ import {ISOCODES, REPORTS} from '../../mocks';
 import { ReportTypeEnum } from "../../../core/infrastructure/enums";
 import {DEAL_TYPES} from "../../mocks/deal-types.mock";
 import {map} from "rxjs/operators";
-import {IFilterData, IReport} from "../../interfaces";
+import {IFilterData, IPaginationParams, IReport, IReportResponse} from "../../interfaces";
 
 @Injectable()
 export class ReportsService {
@@ -39,20 +39,36 @@ export class ReportsService {
     return '&' + params.toString();
   }
 
+  private generatePaginationParams(paginationParams: IPaginationParams): string {
+    let params = new HttpParams();
+
+    if (paginationParams) {
+      params = params.appendAll({
+        ...(paginationParams.pageSize && { pageSize: paginationParams.pageSize }),
+        ...(paginationParams.pageNumber && { pageNumber: paginationParams.pageNumber }),
+      });
+    }
+    return '&' + params.toString();
+  }
+
   getReports(
     reportType: number,
-    filterData?: any
+    filterData?: IFilterData,
+    paginationParams?: IPaginationParams,
   ): Observable<IResponse<ListDataModel<ReportModel>>> {
-    const queryParams = filterData?.dealType || filterData?.range?.start || filterData?.range?.end
+    let queryParams = filterData?.dealType || filterData?.range?.start || filterData?.range?.end
       ? this.generateQueryParams(filterData)
       : '';
-    return this.httpService.get<ReportModel[]>(`${REPORTS_API_URL.getReports}?status=${reportType}${queryParams}`)
-      .pipe(map((res: ReportModel[]) => {
+    queryParams += paginationParams?.pageNumber ?? paginationParams?.pageSize
+      ? this.generatePaginationParams(paginationParams)
+      : '';
+    return this.httpService.get<IReportResponse>(`${REPORTS_API_URL.getReports}?status=${reportType}${queryParams}`)
+      .pipe(map((res: IReportResponse) => {
         return {
           success: true,
           data: {
-            totalCount: res.length,
-            listItems: [...res],
+            totalCount: res.pagination.totalCount,
+            listItems: [...res.reports],
           },
         };
       }));
