@@ -16,12 +16,13 @@ import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
 import {IFilterData, IReport} from '../../../interfaces';
 import { ReportsService } from '../../../services';
 import { State, Store } from 'src/app/shared/store';
-import { switchMap } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { ReportModel } from 'src/app/core/infrastructure/models';
 import { IResponse } from 'src/app/core/infrastructure/interfaces';
 import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
 import {ReportTypeEnum, Urls} from 'src/app/core/infrastructure/enums';
 import {appSettings} from "../../../../app.settings";
+import {CustomSnackbarService} from "../../../../shared/services";
 
 @Component({
   selector: 'app-filled-reports',
@@ -55,7 +56,8 @@ export class FilledReportsComponent {
     private router: Router,
     private matDialog: MatDialog,
     private reportsService: ReportsService,
-    private store: Store<State>
+    private store: Store<State>,
+    private customSnackbarService: CustomSnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -173,6 +175,11 @@ export class FilledReportsComponent {
     this.store.update({ showLoader: true });
     this.reportsService.sendReports(this.getIdList(reports))
       .pipe(
+        catchError(err => {
+          this.customSnackbarService.openSnackbar(err.error.message, 'error');
+          this.store.update({ showLoader: false });
+          return throwError(err);
+        }),
         switchMap(() => {
           return this.reportsService.getReports(ReportTypeEnum.Filled);
         })
