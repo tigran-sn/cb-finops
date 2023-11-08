@@ -20,6 +20,8 @@ import { IResponse } from 'src/app/core/infrastructure/interfaces';
 import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
 import { ReportTypeEnum } from 'src/app/core/infrastructure/enums';
 import {appSettings} from "../../../app.settings";
+import {map, tap} from "rxjs/operators";
+import {catchError, of, startWith, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-reports',
@@ -27,9 +29,11 @@ import {appSettings} from "../../../app.settings";
   styleUrls: ['./reports.component.scss'],
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('paginator') paginator: MatPaginator;
 
+  totalData: number;
+  dataSource = new MatTableDataSource<ReportModel>();
+  pageSizes = [10, 20, 50, 100];
   displayedColumns: string[] = [
     'dealId',
     'dealType',
@@ -42,11 +46,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     'calculationDate',
     'status',
   ];
-  // dataSource = new MatTableDataSource<IReport>(REPORTS);
-  dataSource: MatTableDataSource<ReportModel>;
 
   constructor(
-    // private _liveAnnouncer: LiveAnnouncer,new MatTableDataSource<IReport>(REPORTS);
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private matDialog: MatDialog,
@@ -54,24 +55,34 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     private store: Store<State>
   ) {}
 
-  ngOnInit(): void {
-    this.store.update({ showLoader: true });
-    this.reportsService
-      .getReports(ReportTypeEnum.All)
-      .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
-        if (res.success) {
-          this.dataSource = new _MatTableDataSource(res.data.listItems);
-          this.dataSource.paginator = this.paginator;
-          // this.dataSource.sort = this.sort;
-
-          this.store.update({ showLoader: false });
-        }
-      });
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.store.update({ showLoader: true });
+
+    this.paginator.page
+      .pipe(
+        tap(() => {
+          this.store.update({ showLoader: true });
+        }),
+        startWith({}),
+        switchMap(() => {
+          return this.getTableData$(
+            this.paginator.pageIndex + 1,
+            this.paginator.pageSize
+          ).pipe(catchError(() => of(null)));
+        }),
+        map((res) => {
+          if (res == null) return [];
+          this.totalData = res.data.totalCount;
+          return res.data.listItems;
+        })
+      )
+      .subscribe((res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.store.update({ showLoader: false });
+      });
   }
 
   openEditDialog(item: any) {
@@ -87,19 +98,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
-  // /** Announce the change in sort state for assistive technology. */
-  // announceSortChange(sortState: Sort) {
-  //   // This example uses English messages. If your application supports
-  //   // multiple language, you would internationalize these strings.
-  //   // Furthermore, you can customize the message to add additional
-  //   // details about the values being sorted.
-  //   if (sortState.direction) {
-  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-  //   } else {
-  //     this._liveAnnouncer.announce('Sorting cleared');
-  //   }
-  // }
 
   edit(el: IReport): void {
     this.openEditDialog(el);
@@ -120,17 +118,24 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   filter(filterData: IFilterData): void {
-    this.store.update({ showLoader: true });
-    this.reportsService
-      .getReports(ReportTypeEnum.All, filterData)
-      .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
-        if (res.success) {
-          this.dataSource = new _MatTableDataSource(res.data.listItems);
-          this.dataSource.paginator = this.paginator;
-          // this.dataSource.sort = this.sort;
+    // this.store.update({ showLoader: true });
+    // this.reportsService
+    //   .getReports(ReportTypeEnum.All, filterData)
+    //   .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
+    //     if (res.success) {
+    //       this.dataSource = new _MatTableDataSource(res.data.listItems);
+    //       this.dataSource.paginator = this.paginator;
+    //       // this.dataSource.sort = this.sort;
+    //
+    //       this.store.update({ showLoader: false });
+    //     }
+    //   });
+  }
 
-          this.store.update({ showLoader: false });
-        }
-      });
+  private getTableData$(pageNumber: number, pageSize: number) {
+    return this.reportsService.getReports(ReportTypeEnum.All, {}, {
+      pageSize,
+      pageNumber,
+    });
   }
 }
