@@ -11,6 +11,7 @@ import { State, Store } from '../../../shared/store';
 // import { NotificationService } from '../../core/services';
 // import { ValidationMessages } from '../../core/infrastructure/interfaces/profile';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { CustomSnackbarService } from "../../../shared/services";
 
 @Component({
   template: '',
@@ -25,7 +26,8 @@ export class LoginBaseComponent implements OnInit, OnDestroy {
     protected localStorage: LocalStorageService,
     protected router: Router,
     protected activatedRoute: ActivatedRoute,
-    protected store: Store<State> // protected notificationService: NotificationService,
+    protected store: Store<State>,
+    protected customSnackbarService: CustomSnackbarService // protected notificationService: NotificationService,
   ) {}
 
   ngOnInit() {}
@@ -56,7 +58,9 @@ export class LoginBaseComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
+        this.customSnackbarService.openSnackbar(err.error.message, 'error');
         this.authService.logOut({});
+        this.store.update({ showLoader: false });
         // this.notificationService.showError(err.error.error_description);
       }
     });

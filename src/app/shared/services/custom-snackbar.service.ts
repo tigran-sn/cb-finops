@@ -17,7 +17,7 @@ export class CustomSnackbarService {
     this.setSnackbarIconAndPanelClass(type);
     this._snackBar.openFromComponent(CustomSnackbarComponent, {
       data: { message, snackBar: this._snackBar, icon: this.icon },
-      // duration: 3000,
+      duration: 3000,
       horizontalPosition: "right",
       verticalPosition: "top",
       panelClass: this.panelClass

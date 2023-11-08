@@ -18,6 +18,7 @@ import { LocalStorageService } from '../../../storage/local-storage.service';
 import { AuthService } from 'src/app/core/services';
 import { State, Store } from 'src/app/shared/store';
 import { LoginBaseComponent } from '../login-base/login-base.component';
+import { CustomSnackbarService } from "../../../shared/services";
 
 @Component({
   selector: 'app-login',
@@ -40,9 +41,10 @@ export class LoginComponent extends LoginBaseComponent implements OnInit {
     public router: Router,
     public store: Store<State>,
     // public notificationService: NotificationService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    protected customSnackbarService: CustomSnackbarService
   ) {
-    super(authService, localStorage, router, activatedRoute, store); // notificationService
+    super(authService, localStorage, router, activatedRoute, store, customSnackbarService); // notificationService
   }
 
   ngOnInit(): void {
