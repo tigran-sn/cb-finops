@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from "@angular/common/http";
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LocalStorageService } from '../../../storage/local-storage.service';
@@ -57,8 +58,8 @@ export class LoginBaseComponent implements OnInit, OnDestroy {
             });
         }
       },
-      error: (err) => {
-        this.customSnackbarService.openSnackbar(err.error.message, 'error');
+      error: (err: HttpErrorResponse) => {
+        this.customSnackbarService.openSnackbar(err.message, 'error');
         this.authService.logOut({});
         this.store.update({ showLoader: false });
         // this.notificationService.showError(err.error.error_description);

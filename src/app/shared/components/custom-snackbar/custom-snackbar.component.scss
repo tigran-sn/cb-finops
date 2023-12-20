@@ -11,6 +11,9 @@
         max-width: 200px;
       }
     }
+    &__message {
+      word-break: break-word;
+    }
     .mat-icon {
       font-size: 1.7rem;
       height: 2rem;

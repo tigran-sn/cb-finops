@@ -1,7 +1,7 @@
 <div class="custom-snackbar">
   <div class="custom-snackbar__data">
     <mat-icon>{{ data?.icon }}</mat-icon>
-    <span>{{ data.message }}</span>
+    <span class="custom-snackbar__message">{{ data.message }}</span>
   </div>
 
   <button mat-button (click)="closeSnackbar()">
