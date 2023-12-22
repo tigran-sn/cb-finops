@@ -82,7 +82,7 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.calculationDate | date : 'dd/MM/yyyy' }}
+              {{ element.calculationDate | date : "dd/MM/yyyy" }}
             </div>
           </div>
         </mat-cell>
@@ -94,6 +94,7 @@
 
     <mat-paginator
       #paginator
+      (page)="onPageEvent($event)"
       [length]="totalData"
       [pageSizeOptions]="pageSizes"
       showFirstLastButtons

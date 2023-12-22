@@ -1,34 +1,27 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-// import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { MatPaginator } from '@angular/material/paginator';
-import {_MatTableDataSource, MatTableDataSource} from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material/sort';
-import { LanguageService } from 'src/app/core/services';
-import { ISummary } from "../../interfaces";
-import {ReportTypeEnum} from "../../../core/infrastructure/enums";
-import {IResponse} from "../../../core/infrastructure/interfaces";
-import {ListDataModel} from "../../../core/infrastructure/models/shared/list-data.model";
-import {ReportModel, SummaryModel} from "../../../core/infrastructure/models";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
-import {ReportsService} from "../../services";
-import {State, Store} from "../../../shared/store";
-import {SummaryService} from "../../services/summary";
-import {map, tap} from "rxjs/operators";
-import {catchError, of, startWith, switchMap} from "rxjs";
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { catchError, throwError } from 'rxjs';
+
+import { State, Store } from 'src/app/shared/store';
+import { CustomSnackbarService } from 'src/app/shared/services';
+import { SummaryModel } from '../../../core/infrastructure/models';
+import { SummaryService } from '../../services/summary';
+import { ISummaryResponse } from '../../interfaces/summary-response.interface';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss'],
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements AfterViewInit {
   @ViewChild('paginator') paginator: MatPaginator;
 
-  language: string;
-  dataSource = new MatTableDataSource<SummaryModel>();
   totalData: number;
+  dataSource = new MatTableDataSource<SummaryModel>();
   pageSizes = [10, 20, 50, 100];
   displayedColumns: string[] = [
     'dealId',
@@ -38,52 +31,41 @@ export class SummaryComponent implements OnInit {
     'dealType',
     'calculationDate',
   ];
+  pageSize = 10;
+  pageNumber = 1;
 
   constructor(
-    // private languageService: LanguageService
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private matDialog: MatDialog,
     private summaryService: SummaryService,
-    private store: Store<State>
+    private store: Store<State>,
+    private customSnackbarService: CustomSnackbarService
   ) {}
 
-  ngOnInit(): void {
-    // this.languageService.currentLanguage.subscribe(
-    //   (lang) => (this.language = lang)
-    // );
+  ngAfterViewInit() {
+    this.fetchData(this.pageNumber, this.pageSize);
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  onPageEvent(event: PageEvent) {
+    this.fetchData(event.pageIndex + 1, event.pageSize);
+  }
+
+  private fetchData(pageNumber: number, pageSize: number) {
     this.store.update({ showLoader: true });
 
-    this.paginator.page
+    const queryString = `&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+
+    this.summaryService
+      .getSummaries(queryString)
       .pipe(
-        tap(() => {
-          this.store.update({ showLoader: true });
-        }),
-        startWith({}),
-        switchMap(() => {
-          return this.getTableData$(
-            this.paginator.pageIndex + 1,
-            this.paginator.pageSize
-          ).pipe(catchError(() => of(null)));
-        }),
-        map((res) => {
-          if (res == null) return [];
-          this.totalData = res.data.totalCount;
-          return res.data.listItems;
+        catchError((err: HttpErrorResponse) => {
+          this.customSnackbarService.openSnackbar(err.message, 'error');
+          this.store.update({ showLoader: false });
+          return throwError(err);
         })
       )
-      .subscribe((res) => {
-        this.dataSource = new MatTableDataSource(res);
+      .subscribe((res: ISummaryResponse) => {
+        this.totalData = res.pagination.totalCount;
+        this.dataSource = new MatTableDataSource(res.summaryReports);
         this.store.update({ showLoader: false });
       });
-  }
-
-  private getTableData$(pageNumber: number, pageSize: number) {
-    return this.summaryService
-      .getSummaries({ pageSize, pageNumber })
   }
 }
