@@ -116,7 +116,7 @@ export class SentReportsComponent implements AfterViewInit {
     }${start ? `&startDate=${start}` : ''}${end ? `&endDate=${end}` : ''}`;
 
     this.reportsService
-      .getReportsNew(ReportTypeEnum.Sent, queryString)
+      .getReports(ReportTypeEnum.Sent, queryString)
       .pipe(
         catchError((err: HttpErrorResponse) => {
           this.customSnackbarService.openSnackbar(err.message, 'error');

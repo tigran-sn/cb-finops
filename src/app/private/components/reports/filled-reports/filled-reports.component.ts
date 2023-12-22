@@ -163,7 +163,7 @@ export class FilledReportsComponent {
     }${start ? `&startDate=${start}` : ''}${end ? `&endDate=${end}` : ''}`;
 
     this.reportsService
-      .getReportsNew(ReportTypeEnum.Filled, queryString)
+      .getReports(ReportTypeEnum.Filled, queryString)
       .pipe(
         catchError((err: HttpErrorResponse) => {
           this.customSnackbarService.openSnackbar(err.message, 'error');

@@ -29,73 +29,7 @@ import {
 export class ReportsService {
   constructor(private httpService: HttpService) {}
 
-  private generateQueryParams(filterData: IFilterData): string {
-    let params = new HttpParams();
-
-    if (filterData) {
-      params = params.appendAll({
-        ...(filterData.dealType && { dealType: filterData.dealType }),
-        ...(filterData.range && {
-          ...(filterData.range.start && { startDate: filterData.range.start }),
-          ...(filterData.range.end && { endDate: filterData.range.end }),
-        }),
-      });
-    }
-    return '&' + params.toString();
-  }
-
-  private generatePaginationParams(
-    paginationParams: IPaginationParams
-  ): string {
-    let params = new HttpParams();
-
-    if (paginationParams) {
-      params = params.appendAll({
-        ...(paginationParams.pageSize && {
-          pageSize: paginationParams.pageSize,
-        }),
-        ...(paginationParams.pageNumber && {
-          pageNumber: paginationParams.pageNumber,
-        }),
-      });
-    }
-    return '&' + params.toString();
-  }
-
-  getReports(
-    reportType: number,
-    filterData?: IFilterData,
-    paginationParams?: IPaginationParams
-  ): Observable<IResponse<ListDataModel<ReportModel>>> {
-    let queryParams =
-      filterData?.dealType || filterData?.range?.start || filterData?.range?.end
-        ? this.generateQueryParams(filterData)
-        : '';
-    queryParams +=
-      paginationParams?.pageNumber ?? paginationParams?.pageSize
-        ? this.generatePaginationParams(paginationParams)
-        : '';
-    return this.httpService
-      .get<IReportResponse>(
-        `${REPORTS_API_URL.getReports}?status=${reportType}${queryParams}`
-      )
-      .pipe(
-        map((res: IReportResponse) => {
-          return {
-            success: true,
-            data: {
-              totalCount: res.pagination.totalCount,
-              listItems: [...res.reports],
-            },
-          };
-        })
-      );
-  }
-
-  getReportsNew(
-    status: number,
-    queryParams: string
-  ): Observable<IReportResponse> {
+  getReports(status: number, queryParams: string): Observable<IReportResponse> {
     return this.httpService.get<IReportResponse>(
       `${REPORTS_API_URL.getReports}?status=${status}${queryParams}`
     );
