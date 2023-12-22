@@ -10,7 +10,8 @@ import { SentReportsComponent } from './sent-reports/sent-reports.component';
 import { DetailsComponent } from './details/details.component';
 import { CreateReportButtonComponent } from '../create-report-button/create-report-button.component';
 import { ReportsService } from '../../services';
-import {LookupsService} from "../../services/lookups/lookups.service";
+import { LookupsService } from '../../services/lookups/lookups.service';
+import { FilterFormComponent } from './filter-form/filter-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {LookupsService} from "../../services/lookups/lookups.service";
     SentReportsComponent,
     DetailsComponent,
     CreateReportButtonComponent,
+    FilterFormComponent,
   ],
   imports: [CommonModule, ReportsRoutingModule, SharedModule],
   providers: [ReportsService, LookupsService],
