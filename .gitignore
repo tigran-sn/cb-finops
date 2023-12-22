@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 // Web config file
-web.config
+src/web.config
