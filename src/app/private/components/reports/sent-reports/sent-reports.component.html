@@ -2,7 +2,10 @@
   <h2 class="page__title fz-2 my-2">{{ "SentReports" | translate }}</h2>
 
   <div class="is-flex is-justify-content-space-between my-2">
-    <app-filter (filter)="filter($event)"></app-filter>
+    <app-filter-form
+      (filterApplied)="onFilterApplied($event)"
+      (filterReset)="onFilterReset()"
+    ></app-filter-form>
     <app-create-report-button></app-create-report-button>
   </div>
 
@@ -123,7 +126,11 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.calculationDate ? (element.calculationDate | date: 'dd/MM/yyyy') : '--' }}
+              {{
+                element.calculationDate
+                  ? (element.calculationDate | date : "dd/MM/yyyy")
+                  : "--"
+              }}
             </div>
           </div>
         </mat-cell>
