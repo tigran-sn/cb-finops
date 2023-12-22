@@ -2,7 +2,82 @@
   <h2 class="page__title fz-2 my-2">{{ "Reports" | translate }}</h2>
 
   <div class="is-flex is-justify-content-space-between my-2">
-    <app-filter (filter)="filter($event)"></app-filter>
+    <div class="filters">
+      <form [formGroup]="form">
+        <mat-form-field appearance="fill" class="dropdown-width mr-1">
+          <mat-label>{{ "DealType" | translate }}</mat-label>
+          <mat-select formControlName="dealType">
+            <mat-option
+              *ngFor="let dealType of dealTypes"
+              [value]="dealType.value"
+            >
+              {{ dealType.value | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>{{ "DateRange" | translate }}</mat-label>
+          <mat-date-range-input
+            [formGroup]="range"
+            [rangePicker]="picker"
+            [disabled]="true"
+          >
+            <input
+              matStartDate
+              formControlName="start"
+              placeholder="{{ 'Start' | translate }}"
+            />
+            <input
+              matEndDate
+              formControlName="end"
+              placeholder="{{ 'End' | translate }}"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+            [disabled]="false"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker
+            #picker
+            [disabled]="false"
+          ></mat-date-range-picker>
+
+          <mat-error
+            *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+            >Invalid start date</mat-error
+          >
+          <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+            >Invalid end date</mat-error
+          >
+        </mat-form-field>
+        <button
+          mat-stroked-button
+          color="primary"
+          class="mx-1"
+          [disabled]="
+            !form.get('dealType')?.value &&
+            !range.get('start')?.value &&
+            !range.get('end')?.value
+          "
+          (click)="applyFilter()"
+        >
+          <mat-icon>autorenew</mat-icon> {{ "Apply" | translate }}
+        </button>
+        <button
+          mat-stroked-button
+          color="warn"
+          [disabled]="
+            !form.get('dealType')?.value &&
+            !range.get('start')?.value &&
+            !range.get('end')?.value
+          "
+          (click)="resetFilter()"
+        >
+          <mat-icon>clear</mat-icon> {{ "Clear" | translate }}
+        </button>
+      </form>
+    </div>
     <app-create-report-button></app-create-report-button>
   </div>
 
@@ -123,7 +198,11 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.calculationDate ? (element.calculationDate | date: 'dd/MM/yyyy') : '--' }}
+              {{
+                element.calculationDate
+                  ? (element.calculationDate | date : "dd/MM/yyyy")
+                  : "--"
+              }}
             </div>
           </div>
         </mat-cell>
@@ -174,6 +253,7 @@
 
     <mat-paginator
       #paginator
+      (page)="onPageEvent($event)"
       [length]="totalData"
       [pageSizeOptions]="pageSizes"
       showFirstLastButtons
