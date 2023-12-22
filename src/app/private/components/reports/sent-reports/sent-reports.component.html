@@ -181,6 +181,7 @@
 
     <mat-paginator
       #paginator
+      (page)="onPageEvent($event)"
       [length]="totalData"
       [pageSizeOptions]="pageSizes"
       showFirstLastButtons
