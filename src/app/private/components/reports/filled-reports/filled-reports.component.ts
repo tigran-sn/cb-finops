@@ -1,28 +1,22 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { HttpErrorResponse } from '@angular/common/http';
+
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 
-import { MatPaginator } from '@angular/material/paginator';
-import {
-  MatTableDataSource,
-  _MatTableDataSource,
-} from '@angular/material/table';
-// import { MatSort, Sort } from '@angular/material/sort';
-import { MatDialog } from '@angular/material/dialog';
+import { catchError, throwError, switchMap } from 'rxjs';
 
-import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
-
-import {IFilterData, IReport} from '../../../interfaces';
-import { ReportsService } from '../../../services';
 import { State, Store } from 'src/app/shared/store';
-import { catchError, switchMap, throwError } from 'rxjs';
 import { ReportModel } from 'src/app/core/infrastructure/models';
-import { IResponse } from 'src/app/core/infrastructure/interfaces';
-import { ListDataModel } from 'src/app/core/infrastructure/models/shared/list-data.model';
-import {ReportTypeEnum, Urls} from 'src/app/core/infrastructure/enums';
-import {appSettings} from "../../../../app.settings";
-import {CustomSnackbarService} from "../../../../shared/services";
+import { ReportTypeEnum, Urls } from 'src/app/core/infrastructure/enums';
+import { CustomSnackbarService } from 'src/app/shared/services';
+import { IFilterData, IReport, IReportResponse } from '../../../interfaces';
+import { ReportsService } from '../../../services';
+import { appSettings } from '../../../../app.settings';
+import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-filled-reports',
@@ -30,9 +24,12 @@ import {CustomSnackbarService} from "../../../../shared/services";
   styleUrls: ['./filled-reports.component.scss'],
 })
 export class FilledReportsComponent {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('paginator') paginator: MatPaginator;
 
+  filterData: IFilterData;
+  totalData: number;
+  dataSource = new MatTableDataSource<ReportModel>();
+  pageSizes = [10, 20, 50, 100];
   displayedColumns: string[] = [
     'select',
     'dealId',
@@ -46,12 +43,11 @@ export class FilledReportsComponent {
     'calculationDate',
     'status',
   ];
-  // dataSource = new MatTableDataSource<IReport>(REPORTS);
-  dataSource: MatTableDataSource<ReportModel>;
+  pageSize = 10;
+  pageNumber = 1;
   selection = new SelectionModel<ReportModel>(true, []);
 
   constructor(
-    // private _liveAnnouncer: LiveAnnouncer,new MatTableDataSource<IReport>(REPORTS);
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private matDialog: MatDialog,
@@ -60,28 +56,18 @@ export class FilledReportsComponent {
     private customSnackbarService: CustomSnackbarService
   ) {}
 
-  ngOnInit(): void {
-    this.store.update({ showLoader: true });
-    this.reportsService
-      .getReports(ReportTypeEnum.Filled)
-      .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
-        if (res.success) {
-          this.dataSource = new _MatTableDataSource(res.data.listItems);
-          this.dataSource.paginator = this.paginator;
-          // this.dataSource.sort = this.sort;
-
-          this.store.update({ showLoader: false });
-        }
-      });
-  }
-
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    this.fetchData(this.pageNumber, this.pageSize);
   }
 
-  private getIdList(reports: SelectionModel<ReportModel>): number[] {
-    return reports.selected.map(report => report.dealId);
+  onFilterApplied(filterData: IFilterData): void {
+    this.filterData = filterData;
+    this.fetchData(this.paginator.pageIndex + 1, this.paginator.pageSize);
+  }
+
+  onFilterReset(): void {
+    this.filterData = {};
+    this.fetchData(this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 
   openEditDialog(item: any) {
@@ -97,19 +83,6 @@ export class FilledReportsComponent {
       }
     });
   }
-
-  // /** Announce the change in sort state for assistive technology. */
-  // announceSortChange(sortState: Sort) {
-  //   // This example uses English messages. If your application supports
-  //   // multiple language, you would internationalize these strings.
-  //   // Furthermore, you can customize the message to add additional
-  //   // details about the values being sorted.
-  //   if (sortState.direction) {
-  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-  //   } else {
-  //     this._liveAnnouncer.announce('Sorting cleared');
-  //   }
-  // }
 
   edit(el: IReport): void {
     this.openEditDialog(el);
@@ -129,19 +102,8 @@ export class FilledReportsComponent {
     });
   }
 
-  filter(filterData: IFilterData): void {
-    this.store.update({ showLoader: true });
-    this.reportsService
-      .getReports(ReportTypeEnum.Filled, filterData)
-      .subscribe((res: IResponse<ListDataModel<ReportModel>>) => {
-        if (res.success) {
-          this.dataSource = new _MatTableDataSource(res.data.listItems);
-          this.dataSource.paginator = this.paginator;
-          // this.dataSource.sort = this.sort;
-
-          this.store.update({ showLoader: false });
-        }
-      });
+  onPageEvent(event: PageEvent) {
+    this.fetchData(event.pageIndex + 1, event.pageSize);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -173,26 +135,50 @@ export class FilledReportsComponent {
 
   sendSelectedReports(reports: SelectionModel<ReportModel>): void {
     this.store.update({ showLoader: true });
-    this.reportsService.sendReports(this.getIdList(reports))
+    this.reportsService
+      .sendReports(this.getIdList(reports))
       .pipe(
-        catchError(err => {
+        catchError((err) => {
           this.customSnackbarService.openSnackbar(err.error.message, 'error');
           this.store.update({ showLoader: false });
           return throwError(err);
-        }),
-        switchMap(() => {
-          return this.reportsService.getReports(ReportTypeEnum.Filled);
         })
       )
       .subscribe((res) => {
-        if (res.success) {
-          this.dataSource = new _MatTableDataSource(res.data.listItems);
-          this.dataSource.paginator = this.paginator;
-          this.selection = new SelectionModel<ReportModel>(true, []);
-          // this.dataSource.sort = this.sort;
-          this.router.navigate([`./${Urls.Reports}/${Urls.SentReports}`]);
-          this.store.update({ showLoader: false });
-        }
+        this.customSnackbarService.openSnackbar(res, 'success');
+        this.store.update({ showLoader: false });
+        this.router.navigate([`./${Urls.Reports}/${Urls.SentReports}`]);
       });
+  }
+
+  private fetchData(pageNumber: number, pageSize: number) {
+    this.store.update({ showLoader: true });
+
+    const dealType = this.filterData?.dealType || null;
+    const start = this.filterData?.range?.start || null;
+    const end = this.filterData?.range?.end || null;
+
+    const queryString = `&pageNumber=${pageNumber}&pageSize=${pageSize}${
+      dealType ? `&dealType=${dealType}` : ''
+    }${start ? `&startDate=${start}` : ''}${end ? `&endDate=${end}` : ''}`;
+
+    this.reportsService
+      .getReportsNew(ReportTypeEnum.Filled, queryString)
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.customSnackbarService.openSnackbar(err.message, 'error');
+          this.store.update({ showLoader: false });
+          return throwError(err);
+        })
+      )
+      .subscribe((res: IReportResponse) => {
+        this.totalData = res.pagination.totalCount;
+        this.dataSource = new MatTableDataSource(res.reports);
+        this.store.update({ showLoader: false });
+      });
+  }
+
+  private getIdList(reports: SelectionModel<ReportModel>): number[] {
+    return reports.selected.map((report) => report.dealId);
   }
 }

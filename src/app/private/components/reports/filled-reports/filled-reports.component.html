@@ -2,7 +2,10 @@
   <h2 class="page__title fz-2 my-2">{{ "FilledReports" | translate }}</h2>
 
   <div class="is-flex is-justify-content-space-between my-2">
-    <app-filter (filter)="filter($event)"></app-filter>
+    <app-filter-form
+      (filterApplied)="onFilterApplied($event)"
+      (filterReset)="onFilterReset()"
+    ></app-filter-form>
     <app-create-report-button></app-create-report-button>
   </div>
 
@@ -10,7 +13,8 @@
     <div class="actionsContainer">
       <button
         *ngIf="!selection.isEmpty()"
-        mat-stroked-button color="primary"
+        mat-stroked-button
+        color="primary"
         (click)="sendSelectedReports(selection)"
       >
         {{ "SendReports" | translate }}
@@ -156,7 +160,11 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.calculationDate ? (element.calculationDate | date: 'dd/MM/yyyy') : '--' }}
+              {{
+                element.calculationDate
+                  ? (element.calculationDate | date : "dd/MM/yyyy")
+                  : "--"
+              }}
             </div>
           </div>
         </mat-cell>
@@ -202,16 +210,15 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row
-        *matRowDef="let row; columns: displayedColumns"
-      ></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
 
     <mat-paginator
-      [pageSizeOptions]="[10, 20, 50, 100]"
+      #paginator
+      (page)="onPageEvent($event)"
+      [length]="totalData"
+      [pageSizeOptions]="pageSizes"
       showFirstLastButtons
-      aria-label="Select page of periodic elements"
-    >
-    </mat-paginator>
+    ></mat-paginator>
   </div>
 </div>
