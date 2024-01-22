@@ -17,6 +17,7 @@ import { IFilterData, IReport, IReportResponse } from '../../../interfaces';
 import { ReportsService } from '../../../services';
 import { appSettings } from '../../../../app.settings';
 import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-filled-reports',
@@ -53,7 +54,8 @@ export class FilledReportsComponent {
     private matDialog: MatDialog,
     private reportsService: ReportsService,
     private store: Store<State>,
-    private customSnackbarService: CustomSnackbarService
+    private customSnackbarService: CustomSnackbarService,
+    private translateService: TranslateService
   ) {}
 
   ngAfterViewInit() {
@@ -78,8 +80,13 @@ export class FilledReportsComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const index = this.dataSource.data.indexOf(item);
-        this.dataSource.data[index] = result;
+        this.reportsService.saveReport(result).subscribe(() => {
+          this.customSnackbarService.openSnackbar(
+            this.translateService.instant('SuccessfullyUpdated'),
+            'success'
+          );
+          this.fetchData(1, 10);
+        });
       }
     });
   }

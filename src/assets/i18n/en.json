@@ -20,6 +20,8 @@
   "IntegersOnly": "Only integers are allowed",
   "RateFormat": "Enter 3 integers and 2 decimals",
 
+  "SuccessfullyUpdated": "The report successfully updated",
+
   "PageNotFound": "Page not found",
   "ReturnToMainPage": "Return to main page",
 

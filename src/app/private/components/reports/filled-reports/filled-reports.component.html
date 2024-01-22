@@ -13,8 +13,8 @@
     <div class="actionsContainer">
       <button
         *ngIf="!selection.isEmpty()"
-        mat-stroked-button
         color="primary"
+        mat-flat-button
         (click)="sendSelectedReports(selection)"
       >
         {{ "SendReports" | translate }}
