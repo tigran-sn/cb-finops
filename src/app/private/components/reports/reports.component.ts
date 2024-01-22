@@ -15,8 +15,6 @@ import { CustomSnackbarService } from 'src/app/shared/services';
 
 import { IFilterData, IReport, IReportResponse } from '../../interfaces';
 import { ReportsService } from '../../services';
-import { appSettings } from '../../../app.settings';
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'app-reports',
@@ -66,24 +64,6 @@ export class ReportsComponent implements AfterViewInit {
   onFilterReset(): void {
     this.filterData = {};
     this.fetchData(this.paginator.pageIndex + 1, this.paginator.pageSize);
-  }
-
-  openEditDialog(item: any) {
-    const dialogRef = this.matDialog.open(EditDialogComponent, {
-      width: `${appSettings.reports.modalWidth}px`,
-      data: { item },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const index = this.dataSource.data.indexOf(item);
-        this.dataSource.data[index] = result;
-      }
-    });
-  }
-
-  edit(el: IReport): void {
-    this.openEditDialog(el);
   }
 
   downloadXLS(el: IReport): void {
