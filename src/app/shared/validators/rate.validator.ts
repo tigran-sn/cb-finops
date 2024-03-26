@@ -9,16 +9,17 @@ export class RateFormatValidator {
         return null;
       }
 
-      const regex = /^(\d{3})(\.\d{2})?$/;
+      const regex = /^(\d{1,3})(\.\d{1,2})?$/;
 
       const isValid = regex.test(value);
 
-      return (!isValid) ?
-        {
-          rateFormat: {
-            valid: false,
+      return !isValid
+        ? {
+            rateFormat: {
+              valid: false,
+            },
           }
-        } : null;
+        : null;
     };
   }
 }
