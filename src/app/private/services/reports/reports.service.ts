@@ -73,4 +73,8 @@ export class ReportsService {
         })
       );
   }
+
+  saveReport(report: IReport): Observable<string> {
+    return this.httpService.post(`${REPORTS_API_URL.updateReport}`, report);
+  }
 }

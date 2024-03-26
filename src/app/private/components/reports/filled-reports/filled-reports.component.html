@@ -20,9 +20,9 @@
         {{ "SendReports" | translate }}
       </button>
     </div>
-    <mat-table mat-table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource" class="table-responsive">
       <!-- Checkbox Column -->
-      <ng-container matColumnDef="select">
+      <ng-container matColumnDef="select" sticky>
         <mat-header-cell *matHeaderCellDef>
           <mat-checkbox
             (change)="$event ? toggleAllRows() : null"
@@ -182,6 +182,17 @@
             <div class="tableRow__header">
               {{ element.status | translate }}
             </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions" stickyEnd>
+        <mat-header-cell
+          *matHeaderCellDef
+          aria-label="row actions"
+        ></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="tableRow">
             <div class="tableRow__icons is-flex">
               <button
                 (click)="edit(element)"
@@ -190,20 +201,13 @@
               >
                 <mat-icon>edit</mat-icon>
               </button>
-              <!-- <button
-                (click)="downloadXLS(element)"
-                mat-icon-button
-                aria-label="Download report as XLS"
-              >
-                <mat-icon>save_alt</mat-icon>
-              </button>
               <button
-                (click)="downloadPDF(element)"
+                (click)="delete(element.dealId)"
                 mat-icon-button
-                aria-label="Download report as PDF"
+                aria-label="Delete report"
               >
-                <mat-icon>picture_as_pdf</mat-icon>
-              </button> -->
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
           </div>
         </mat-cell>

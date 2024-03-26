@@ -43,6 +43,7 @@ export class FilledReportsComponent {
     'dealDate',
     'calculationDate',
     'status',
+    'actions',
   ];
   pageSize = 10;
   pageNumber = 1;
@@ -78,22 +79,32 @@ export class FilledReportsComponent {
       data: { item },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.reportsService.saveReport(result).subscribe(() => {
-          this.customSnackbarService.openSnackbar(
-            this.translateService.instant('SuccessfullyUpdated'),
-            'success'
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((report: IReport) => {
+          return this.reportsService.saveReport(report).pipe(
+            catchError((error: HttpErrorResponse) => {
+              this.customSnackbarService.openSnackbar(error.message, 'error');
+              return throwError(() => error.message);
+            })
           );
-          this.fetchData(1, 10);
-        });
-      }
-    });
+        })
+      )
+      .subscribe(() => {
+        this.customSnackbarService.openSnackbar(
+          this.translateService.instant('SuccessfullyUpdated'),
+          'success'
+        );
+        this.fetchData(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      });
   }
 
   edit(el: IReport): void {
     this.openEditDialog(el);
   }
+
+  delete(id: number): void {}
 
   downloadXLS(el: IReport): void {
     console.log('downloadXLS', el);
