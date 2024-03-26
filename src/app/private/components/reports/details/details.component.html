@@ -119,7 +119,7 @@
     <!--    <button mat-raised-button color="primary" type="submit">Submit</button>-->
     <div class="reportForm__buttons">
       <button
-        [disabled]="form.invalid && form.touched"
+        [disabled]="(form.invalid && form.touched) || !form.touched"
         mat-raised-button
         color="primary"
         type="button"
@@ -129,7 +129,7 @@
         {{ "Save" | translate }}
       </button>
       <button
-        [disabled]="form.invalid && form.touched"
+        [disabled]="(form.invalid && form.touched) || !form.touched"
         mat-raised-button
         color="primary"
         type="button"
