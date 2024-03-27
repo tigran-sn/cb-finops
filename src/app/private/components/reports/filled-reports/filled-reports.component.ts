@@ -79,49 +79,15 @@ export class FilledReportsComponent {
     this.fetchData(this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 
-  openEditDialog(item: any) {
-    const dialogRef = this.matDialog.open(EditDialogComponent, {
+  openEditDialog(item: IReport) {
+    const dialogRef = this.dialog.open(EditDialogComponent, {
       width: `${appSettings.reports.modalWidth}px`,
       data: { item },
     });
 
-    dialogRef
-      .afterClosed()
-      .pipe(
-        switchMap((report: IReport) => {
-          return this.reportsService.saveReport(report).pipe(
-            catchError((error: HttpErrorResponse) => {
-              this.customSnackbarService.openSnackbar(error.message, 'error');
-              return throwError(() => error.message);
-            })
-          );
-        })
-      )
-      .subscribe(() => {
-        this.customSnackbarService.openSnackbar(
-          this.translateService.instant('SuccessfullyUpdated'),
-          'success'
-        );
-        this.fetchData(this.paginator.pageIndex + 1, this.paginator.pageSize);
-      });
-  }
-
-  confirmDialog(id: number): void {
-    const message = this.translateService.instant('DeleteMessage');
-
-    const dialogData = new ConfirmDialogModel(
-      this.translateService.instant('ConfirmAction'),
-      message
-    );
-
-    const dialogRef = this.dialog.open(ConfirmDialogBasicComponent, {
-      maxWidth: '400px',
-      data: dialogData,
-    });
-
     dialogRef.afterClosed().subscribe((response) => {
       if (response) {
-        this.delete(id)
+        this.edit(response)
           .pipe(
             catchError((error: HttpErrorResponse) => {
               this.customSnackbarService.openSnackbar(error.message, 'error');
@@ -142,8 +108,42 @@ export class FilledReportsComponent {
     });
   }
 
-  edit(el: IReport): void {
-    this.openEditDialog(el);
+  confirmDialog(id: number): void {
+    const dialogData = new ConfirmDialogModel(
+      this.translateService.instant('ConfirmAction'),
+      this.translateService.instant('DeleteMessage')
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogBasicComponent, {
+      maxWidth: `${appSettings.reports.modalWidth}px`,
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      if (response) {
+        this.delete(id)
+          .pipe(
+            catchError((error: HttpErrorResponse) => {
+              this.customSnackbarService.openSnackbar(error.message, 'error');
+              return throwError(() => error.message);
+            })
+          )
+          .subscribe(() => {
+            this.customSnackbarService.openSnackbar(
+              this.translateService.instant('SuccessfullyDeleted'),
+              'success'
+            );
+            this.fetchData(
+              this.paginator.pageIndex + 1,
+              this.paginator.pageSize
+            );
+          });
+      }
+    });
+  }
+
+  edit(el: IReport): Observable<any> {
+    return this.reportsService.saveReport(el);
   }
 
   delete(id: number): Observable<string> {

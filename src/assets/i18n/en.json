@@ -9,6 +9,8 @@
   "Password": "Password",
   "No": "No",
   "Yes": "Yes",
+  "ConfirmAction": "Confirm action",
+  "DeleteMessage": "Are you sure you want to delete.",
   "CapsLock": "CapsLock is on",
   "TransactionNumber": "Transaction number",
   "TransactionType": "Transaction Type",
@@ -21,6 +23,7 @@
   "RateFormat": "Enter 3 integers and 2 decimals",
 
   "SuccessfullyUpdated": "The report successfully updated",
+  "SuccessfullyRemoved": "The report successfully removed",
 
   "PageNotFound": "Page not found",
   "ReturnToMainPage": "Return to main page",
@@ -49,7 +52,7 @@
   "CLSELL": "Cashless currency sales",
 
   "ReportName": "Report name",
-  "DateTime": "Date/Time",
+  "DateTime": "Sign Date/Time",
   "Time": "Time",
   "Date": "Date",
   "Status": "Status",

@@ -10,7 +10,7 @@
   </div>
 
   <div class="table__page">
-    <mat-table mat-table [dataSource]="dataSource" class="table-responsive">
+    <mat-table [dataSource]="dataSource" class="table-responsive">
       <ng-container matColumnDef="dealId">
         <mat-header-cell *matHeaderCellDef>
           {{ "No." | translate }}
@@ -88,7 +88,7 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.volume }}
+              {{ element.volume | number : "1.0-0" }}
             </div>
           </div>
         </mat-cell>

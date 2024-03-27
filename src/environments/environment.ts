@@ -8,8 +8,6 @@ export const environment = {
     'localhost:8001',
     'localhost:5000',
     'localhost:8000',
-    'https://qa-trkx-api.azurewebsites.net',
-    'https://qa-trkx-auth.azurewebsites.net',
     'localhost:7039',
   ],
   searchStrLenght: 1,

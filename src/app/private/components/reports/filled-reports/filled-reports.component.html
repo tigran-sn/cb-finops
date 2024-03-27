@@ -122,7 +122,7 @@
         <mat-cell *matCellDef="let element">
           <div class="tableRow">
             <div class="tableRow__header">
-              {{ element.volume }}
+              {{ element.volume | number : "1.0-0" }}
             </div>
           </div>
         </mat-cell>
@@ -195,7 +195,7 @@
           <div class="tableRow">
             <div class="tableRow__icons is-flex">
               <button
-                (click)="edit(element)"
+                (click)="openEditDialog(element)"
                 mat-icon-button
                 aria-label="Edit report"
               >

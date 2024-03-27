@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
 
+## Build production
+
+Before you will build the project, check the `environments.prod.ts` file and configure the environment accordingly.
+Run `ng build --configuration=production --base-href /app/` to build the project. The build artifacts will be stored in the `dist/` directory.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
@@ -10,7 +15,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## Build development
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
