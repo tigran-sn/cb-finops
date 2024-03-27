@@ -9,6 +9,8 @@
   "Password": "Գաղտնաբառ",
   "No": "Ոչ",
   "Yes": "Այո",
+  "ConfirmAction": "Հաստատել գործողությունը",
+  "DeleteMessage": "Վստա՞հ եք, որ ցանկանում եք հեռացնել:",
   "CapsLock": "CapsLock-ը միացված է",
   "TransactionNumber": "Գործարքի համար",
   "TransactionType": "Գործարքի տեսակ",

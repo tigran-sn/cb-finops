@@ -4,10 +4,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 
-import { catchError, throwError, switchMap } from 'rxjs';
+import { catchError, throwError, switchMap, Observable, tap } from 'rxjs';
 
 import { State, Store } from 'src/app/shared/store';
 import { ReportModel } from 'src/app/core/infrastructure/models';
@@ -18,6 +18,10 @@ import { ReportsService } from '../../../services';
 import { appSettings } from '../../../../app.settings';
 import { EditDialogComponent } from '../../edit-dialog/edit-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  ConfirmDialogModel,
+  ConfirmDialogBasicComponent,
+} from 'src/app/shared/components/confirm-dialog-basic/confirm-dialog-basic.component';
 
 @Component({
   selector: 'app-filled-reports',
@@ -48,6 +52,7 @@ export class FilledReportsComponent {
   pageSize = 10;
   pageNumber = 1;
   selection = new SelectionModel<ReportModel>(true, []);
+  dialogRef: MatDialogRef<ConfirmDialogBasicComponent>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,7 +61,8 @@ export class FilledReportsComponent {
     private reportsService: ReportsService,
     private store: Store<State>,
     private customSnackbarService: CustomSnackbarService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    public dialog: MatDialog
   ) {}
 
   ngAfterViewInit() {
@@ -100,11 +106,49 @@ export class FilledReportsComponent {
       });
   }
 
+  confirmDialog(id: number): void {
+    const message = this.translateService.instant('DeleteMessage');
+
+    const dialogData = new ConfirmDialogModel(
+      this.translateService.instant('ConfirmAction'),
+      message
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogBasicComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      if (response) {
+        this.delete(id)
+          .pipe(
+            catchError((error: HttpErrorResponse) => {
+              this.customSnackbarService.openSnackbar(error.message, 'error');
+              return throwError(() => error.message);
+            })
+          )
+          .subscribe(() => {
+            this.customSnackbarService.openSnackbar(
+              this.translateService.instant('SuccessfullyUpdated'),
+              'success'
+            );
+            this.fetchData(
+              this.paginator.pageIndex + 1,
+              this.paginator.pageSize
+            );
+          });
+      }
+    });
+  }
+
   edit(el: IReport): void {
     this.openEditDialog(el);
   }
 
-  delete(id: number): void {}
+  delete(id: number): Observable<string> {
+    return this.reportsService.deleteReport(id);
+  }
 
   downloadXLS(el: IReport): void {
     console.log('downloadXLS', el);

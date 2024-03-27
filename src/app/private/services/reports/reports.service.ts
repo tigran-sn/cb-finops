@@ -77,4 +77,10 @@ export class ReportsService {
   saveReport(report: IReport): Observable<string> {
     return this.httpService.post(`${REPORTS_API_URL.updateReport}`, report);
   }
+
+  deleteReport(dealId: number): Observable<string> {
+    return this.httpService.delete(
+      `${REPORTS_API_URL.deleteReports}?dealId=${dealId}`
+    );
+  }
 }

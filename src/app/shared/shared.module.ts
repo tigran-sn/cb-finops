@@ -14,6 +14,7 @@ import { FilterComponent } from './components/filter/filter.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component';
+import { ConfirmDialogBasicComponent } from './components/confirm-dialog-basic/confirm-dialog-basic.component';
 
 const COMPONENTS = [
   NotFoundComponent,
@@ -22,6 +23,7 @@ const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
   CustomSnackbarComponent,
+  ConfirmDialogBasicComponent,
 ];
 
 const PIPES = [GetFirstErrorPipe];
@@ -45,6 +47,6 @@ const PIPES = [GetFirstErrorPipe];
     MaterialModule,
     TranslateModule,
   ],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class SharedModule {}
